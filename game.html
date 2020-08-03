@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Looksmatch Game Player</title>
+
+	<style type="text/css">
+
+	html, body {
+		margin: 0;
+		background: black;
+		color: white;
+		font-family: sans-serif;
+		font-size: 3vh;
+	}
+
+	header, footer {
+		text-align: center;
+		line-height: 1;
+		position: relative;
+		z-index: 20;
+	}
+
+	h1 {
+		font-size: 1.5rem;
+		margin: 4.25vh 0 3.25vh 0;
+	}
+
+	footer {
+		font-size: 0.8rem;
+		padding: 4.3vh 0 5.3vh 0;
+		color: gray;
+	}
+		
+	main {
+		background: #222;
+		height: 76vh;
+		border-radius: 4vh;
+		margin: 0 2vh;
+		font-size: 0;
+		position: relative;
+	}
+
+	main * {
+		user-select: none;
+	}
+
+	.square, .block, .block::after, .block::before {
+		width: 16.5vh;
+		height: 16.5vh;
+		border-radius: 2vh;
+	}
+
+	.square {
+		display: inline-block;
+		background: #333;
+		margin: 2vh 0 0 2vh;
+	}
+
+	.square.flashing {
+		animation: flash 0.25s ease-in-out;
+	}
+
+	.block::before, .block::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-size: 100% 100%;
+		background-position: center center;
+	}
+
+	.block::before {
+		box-shadow: 0 0.25vh 1.5vh -0.75vh black;
+		background-image: url('overlay-shadow.png');
+	}
+
+	.block::after {
+		background-image: url('overlay-highlight.png');
+		mix-blend-mode: color-dodge;
+	}
+
+	.block {
+		position: absolute;
+		transition: top 0.25s ease-in-out, left 0.25s ease-in-out;
+		background-size: cover;
+		background-position: center center;
+		animation: spawn 0.25s ease-in;
+	}
+
+	.block[data-stage='2'] {
+		box-shadow: 0 0 0.3vh 0.05vh #606060;
+	}
+
+	.block[data-stage='3'] {
+		box-shadow: 0 0 0.3vh 0.05vh #3f51b5;
+	}
+
+	.block[data-stage='4'] {
+		box-shadow: 0 0 0.35vh 0.1vh #2196f3;
+	}
+
+	.block[data-stage='5'] {
+		box-shadow: 0 0 0.4vh 0.15vh #00bcd4;
+	}
+
+	.block[data-stage='6'] {
+		box-shadow: 0 0 0.45vh 0.2vh #009688;
+	}
+
+	.block[data-stage='7'] {
+		box-shadow: 0 0 0.5vh 0.25vh #4caf50;
+	}
+
+	.block[data-stage='8'] {
+		box-shadow: 0 0 0.55vh 0.3vh #ebd831;
+	}
+
+	.block[data-stage='9'] {
+		box-shadow: 0 0 0.6vh 0.35vh #ffc107;
+	}
+
+	.block[data-stage='10'] {
+		box-shadow: 0 0 0.65vh 0.4vh #ff9800;
+	}
+
+	.block[data-stage='11'] {
+		box-shadow: 0 0 0.75vh 0.5vh #ff5722;
+	}
+
+	.block[data-stage='12'] {
+		box-shadow: 0 0 1vh 0.75vh #f44336;
+	}
+
+	dialog {
+		z-index: 10;
+		top: 50vh;
+		left: 50vw;
+		transform: translate(-50%, -50%);
+		border-radius: 5vh;
+		padding: 4vh;
+		background: rgba(255, 255, 255, 75%);
+		color: black;
+		display: none;
+		backdrop-filter: blur(1vh);
+		border: 0;
+		width: 51vh;
+		box-shadow: 0 1vh 5vh 0 rgba(0, 0, 0, 50%);
+		position: absolute;
+	}
+
+	#windshield {
+		display: none;
+		position: fixed;
+		z-index: 5;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 50%);
+		/*backdrop-filter: saturate(50%);*/
+	}
+
+	button {
+		appearance: none;
+    border: none;
+    font: inherit;
+    padding: 1.5vh 2vh;
+    line-height: 1;
+    border-radius: 1vh;
+    background: #273c75;
+    color: white;
+    cursor: pointer;
+	}
+
+	button:hover {
+		background: #192a56;
+	}
+
+	button:active {
+		box-shadow: inset 0 0.25vh 0.5vh 0.25vh black;
+		padding: 1.6vh 2vh 1.4vh 2vh;
+	}
+
+	h2 {
+		margin: 0;
+	}
+
+	.popup {
+		animation: popop 2s ease-in-out 1s both;
+	}
+
+	.popup, .fadein {
+		display: block !important;
+	}
+
+	.fadein {
+		animation: fadescreen 2s ease-in-out 1s both;
+	}
+
+	@keyframes spawn {
+		from {
+			opacity: 0;
+			transform: scale(0);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes fadescreen {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes popop {
+		0% {
+			opacity: 0;
+			transform: translate(-50%, -50%) scale(0);
+		}
+		50%, 100% {
+			transform: translate(-50%, -50%) scale(1);
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes pulse {
+		0% {
+			transform: scale(1);
+			filter: brightness(1);
+		}
+		50% {
+			transform: scale(1.1);
+			filter: brightness(1.5);
+		}
+		100% {
+			transform: scale(1);
+			filter: brightness(1);
+		}
+	}
+
+	@keyframes flash {
+		0% {
+			transform: scale(1);
+			background: #333;
+		}
+		50% {
+			transform: scale(1.1);
+			background: #444;
+		}
+		100% {
+			transform: scale(1);
+			background: #333;
+		}
+	}
+
+	</style>
+
+</head>
+<body>
+	<header>
+		<h1>Looksmatch</h1>
+	</header>
+
+
+
+	<main>
+		<span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span><span class='square'></span>
+	</main>
+
+
+
+	<footer>
+		By <em>thecel</em>
+	</footer>
+
+
+	<div id='windshield'></div>
+
+
+	<dialog id='game-over'>
+		
+		<h2>Game over :(</h2>
+
+		<p>
+			No more moves left!
+		</p>
+
+		<button>New game</button>
+
+	</dialog>
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+	<script>
+
+		function vh(v) {
+		  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+		  return (v * h) / 100;
+		}
+
+		function vw(v) {
+		  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		  return (v * w) / 100;
+		}
+
+		function vmin(v) {
+		  return Math.min(vh(v), vw(v));
+		}
+
+		function vmax(v) {
+		  return Math.max(vh(v), vw(v));
+		}
+
+		var animating = false;
+
+		const animDur = 250;
+
+		const transpose = m => m[0].map((x,i) => m.map(x => x[i]));
+
+		const characterProgression = [
+			'Subhuman.png',
+			'Eggman.png',
+			'StBlackOps2Cel.png',
+			'Jsanza29.png',
+			'MarkZuckerberg.png',
+			/*'ElliotRoger.png',
+			'RyanGosling.png',
+			'BradPitt.png',
+			'ZaynMalik.png',
+			'JordanBarrett.png',
+			'SeanOPry.png'*/
+		];
+
+		function gameOver() {
+			$('#game-over').addClass('popup');
+
+			$('#windshield').addClass('fadein');
+		}
+
+		function gameIsOver() {
+			if ($('.block').length < 16) return false;
+
+			const d = getBoardData();
+
+			const checkString = (JSON.stringify(d) + JSON.stringify(transpose(d))).replace(/[^0-9\[\]]/gmi, '');
+
+			console.log(checkString);
+
+			return !/([0-9])\1+/gmi.test(checkString);
+		}
+
+		function getRandomOpenSpot() {
+			var spots = [];
+
+			for (var y = 0; y < 4; y++) {
+				for (var x = 0; x < 4; x++) {
+					var squarePos = $('.square').get(x + y * 4).getBoundingClientRect();
+					if (!document.elementFromPoint(squarePos.left + vh(8.25), squarePos.top + vh(8.25)).className.includes('block')) {
+						spots.push([x, y]);
+					}
+				}
+			}
+
+			const put = spots[Math.floor(Math.random()*spots.length)];
+
+			return {x : put[0], y : put[1]};
+		}
+
+		function spawnSquare() {
+			const xy = getRandomOpenSpot();
+
+			const stage = [0, 1, 0][Math.floor(Math.random()*3)];
+
+			$('main').append(`
+				<div class='block' style='background-image: url("characters/${characterProgression[stage]}"); top: ${2 + xy.y * 18.5}vh; left: ${2 + xy.x * 18.5}vh;' data-stage='${stage + 1}'></div>
+			`);
+			let spawnSquare = $($('.square').get(xy.x + xy.y * 4));
+			spawnSquare.addClass('flashing');
+
+			setTimeout(() => {
+				spawnSquare.removeClass('flashing');
+				if (gameIsOver()) gameOver();
+			}, animDur);
+		}
+		
+		/*for (let i = 0; i < 2; i++) */spawnSquare();
+
+		var queued = false;
+
+		var gdx = 0;
+		var gdy = 0;
+
+		function getBoardData() {
+
+			var boardContents = [
+				[null, null, null, null],
+				[null, null, null, null],
+				[null, null, null, null],
+				[null, null, null, null]
+			];
+
+			for (var y = 0; y < 4; y++) {
+				for (var x = 0; x < 4; x++) {
+					var squarePos = $('.square').get(x + y * 4).getBoundingClientRect();
+					let elementAtLocation = document.elementFromPoint(squarePos.left + vh(8.25), squarePos.top + vh(8.25));
+					
+					if (elementAtLocation.className.includes('block')) {
+						boardContents[y][x] = $(elementAtLocation).attr('data-stage');
+					}
+				}
+			}
+
+			return boardContents;
+		}
+
+		function slide(dx, dy) {
+
+			if (animating) {
+				if (!queued) {
+					queued = true;
+					gdx = dx;
+					gdy = dy;
+				}
+				return;
+			}
+
+			setTimeout(() => {animating = false; if (queued) {queued = false; slide(gdx, gdy)}}, animDur);
+
+			animating = true;
+
+			var delta = [
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0]
+			];
+
+			var rDelta = [
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0]
+			];
+
+			var promotion = [
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false]
+			];
+
+			var collapse = [
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false]
+			];
+
+			var boardContents = getBoardData();
+
+			if (dx === 0 && dy === -1) {
+
+				for (var x = 0; x < 4; x++) {
+					for (var y = 0; y < 4; y++) {
+
+						if (!boardContents[y][x]) {
+							continue;
+						}
+
+						let blockDelta = -y;
+						for (var ny = y - 1; ny >= 0; ny--) {
+							if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
+								blockDelta = ny - y + 1;
+								break;
+							}
+						}
+
+						if (blockDelta === 0) continue;
+
+						delta[y][x] = blockDelta * dy;
+
+						boardContents[y + blockDelta][x] = (boardContents[y + blockDelta][x] === boardContents[y][x]) ? (() => {promotion[y + blockDelta + rDelta[y + blockDelta][x]][x] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+						boardContents[y][x] = null;
+
+						rDelta[y + blockDelta][x] = -blockDelta;
+					}
+				}
+			}
+
+			else if (dx === 0 && dy === 1) {
+
+				for (var x = 0; x < 4; x++) {
+					for (var y = 3; y >= 0; y--) {
+
+						if (!boardContents[y][x]) {
+							continue;
+						}
+
+						let blockDelta = 3 - y;
+						for (var ny = y + 1; ny < 4; ny++) {
+							if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
+								blockDelta = ny - y - 1;
+								break;
+							}
+						}
+
+						if (blockDelta === 0) continue;
+
+						delta[y][x] = blockDelta * dy;
+
+						boardContents[y + blockDelta][x] = (boardContents[y + blockDelta][x] === boardContents[y][x]) ? (() => {promotion[y + blockDelta + rDelta[y + blockDelta][x]][x] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+						boardContents[y][x] = null;
+
+						rDelta[y + blockDelta][x] = -blockDelta;
+					}
+				}
+			}
+
+			else if (dx === -1 && dy === 0) {
+
+				for (var y = 0; y < 4; y++) {
+					for (var x = 0; x < 4; x++) {
+
+						if (!boardContents[y][x]) {
+							continue;
+						}
+
+						let blockDelta = -x;
+						for (var nx = x - 1; nx >= 0; nx--) {
+							if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
+								blockDelta = nx - x + 1;
+								break;
+							}
+						}
+
+						if (blockDelta === 0) continue;
+
+						delta[y][x] = blockDelta * dx;
+
+						boardContents[y][x + blockDelta] = (boardContents[y][x + blockDelta] === boardContents[y][x]) ? (() => {promotion[y][x + blockDelta + rDelta[y][x + blockDelta]] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+						boardContents[y][x] = null;
+
+						rDelta[y][x + blockDelta] = -blockDelta;
+					}
+				}
+			}
+
+			else if (dx === 1 && dy === 0) {
+
+				for (var y = 0; y < 4; y++) {
+					for (var x = 3; x >= 0; x--) {
+
+						if (!boardContents[y][x]) {
+							continue;
+						}
+
+						let blockDelta = 3 - x;
+						for (var nx = x + 1; nx < 4; nx++) {
+							if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
+								blockDelta = nx - x - 1;
+								break;
+							}
+						}
+
+						if (blockDelta === 0) continue;
+
+						delta[y][x] = blockDelta * dx;
+
+						boardContents[y][x + blockDelta] = (boardContents[y][x + blockDelta] === boardContents[y][x]) ? (() => {promotion[y][x + blockDelta + rDelta[y][x + blockDelta]] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+						boardContents[y][x] = null;
+
+						rDelta[y][x + blockDelta] = -blockDelta;
+					}
+				}
+			}
+
+
+
+			for (var y = 0; y < 4; y++) {
+				for (var x = 0; x < 4; x++) {
+					var squarePos = $('.square').get(x + y * 4).getBoundingClientRect();
+					let elementAtLocation = document.elementFromPoint(squarePos.left + vh(8.25), squarePos.top + vh(8.25));
+					
+					let elementAtNewLocation = document.elementFromPoint(squarePos.left + vh(8.25) + vh(delta[y][x] * dx * 18.5), squarePos.top + vh(8.25) + vh(delta[y][x] * dy * 18.5));
+
+					if (elementAtLocation.className.includes('block')) {
+						$(elementAtLocation).css('top', 2 + (y + delta[y][x] * dy) * 18.5 + 'vh');
+						$(elementAtLocation).css('left', 2 + (x + delta[y][x] * dx) * 18.5 + 'vh');
+
+						if (promotion[y][x]) {
+							setTimeout(() => {
+								var stage = Number($(elementAtLocation).attr('data-stage'));
+								setTimeout(() => {
+									$(elementAtLocation).css({
+										'background-image' : `url("characters/${characterProgression[stage]}")`,
+									}).attr('data-stage', (stage + 1).toString());
+								}, animDur / 2);
+								$(elementAtLocation).css({
+									'animation' : `pulse ${animDur}ms ease-in-out`
+								});
+								setTimeout(() => {
+									$(elementAtLocation).css({
+										'animation' : `none`
+									});
+								}, animDur);
+							}, animDur / 2);
+						}
+
+						if (collapse[y][x]) {
+							setTimeout(() => {
+								$(elementAtLocation).remove();
+							}, animDur);
+						}
+					}
+				}
+			}
+
+			const t = JSON.stringify(delta);
+
+			if (t.includes('1') || t.includes('2') || t.includes('3')) {
+				setTimeout(spawnSquare, animDur);
+			}
+			else {
+				animating = false;
+			}
+		}
+
+		function keyMove(e) {
+			if (e.key === 'ArrowUp') {
+				slide(0, -1);
+			}
+			else if (e.key === 'ArrowDown') {
+				slide(0, 1);
+			}
+			else if (e.key === 'ArrowLeft') {
+				slide(-1, 0);
+			}
+			else if (e.key === 'ArrowRight') {
+				slide(1, 0);
+			}
+		}
+
+		var mousePressed = false;
+		var touchPressed = false;
+
+		$(window).on('keydown', keyMove);
+
+		$('main').on('mousedown', (e) => {
+			mousePressed = [e.clientX, e.clientY];
+		})
+		.on('touchstart', (e) => {
+			e.preventDefault();
+
+			touchPressed = [e.touches[0].clientX, e.touches[0].clientY];
+		})
+		.on('mousemove', (e) => {
+			if (!mousePressed) return;
+
+			const pos = [e.clientX, e.clientY];
+			const d = pos.map((el, i) => (el - mousePressed[i]));
+
+			if (d[0]**2 + d[1]**2 < ($('main')[0].offsetWidth / 3)**2) return;
+
+
+
+			if (d[0] > 0 && d[0] > Math.abs(d[1])) slide(1, 0);
+
+			else if (d[0] < 0 && -d[0] > Math.abs(d[1])) slide(-1, 0);
+
+			else if (d[1] > 0 && d[1] > Math.abs(d[0])) slide(0, 1);
+
+			else if (d[1] < 0 && -d[1] > Math.abs(d[0])) slide(0, -1);
+
+			mousePressed = false;
+		})
+		.on('touchmove', (e) => {
+			e.preventDefault();
+
+			if (!touchPressed) return;
+
+			const pos = [e.touches[0].clientX, e.touches[0].clientY];
+			const d = pos.map((el, i) => (el - touchPressed[i]));
+
+			if (d[0]**2 + d[1]**2 < ($('main')[0].offsetWidth / 3)**2) return;
+
+
+
+			if (d[0] > 0 && d[0] > Math.abs(d[1])) slide(1, 0);
+
+			else if (d[0] < 0 && -d[0] > Math.abs(d[1])) slide(-1, 0);
+
+			else if (d[1] > 0 && d[1] > Math.abs(d[0])) slide(0, 1);
+
+			else if (d[1] < 0 && -d[1] > Math.abs(d[0])) slide(0, -1);
+
+			touchPressed = false;
+		})
+		.on('mouseup', (e) => {
+			mousePressed = false;
+		})
+		.on('touchend', (e) => {
+			touchPressed = false;
+		});
+
+	</script>
+
+</body>
+</html>
