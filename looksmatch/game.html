@@ -3,6 +3,10 @@
 <head>
 	<title>Looksmatch Game Player</title>
 
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="clear-sans-font-face/stylesheet.css">
+
 	<style type="text/css">
 
 	* {
@@ -13,7 +17,7 @@
 		margin: 0;
 		background: #263238;
 		color: white;
-		font-family: sans-serif;
+		font-family: 'Clear Sans', sans-serif;
 		font-size: 3vh;
 		width: 85vh;
 		line-height: 1.5;
@@ -74,7 +78,7 @@
 		border-radius: 3vh;
 	}
 
-	section * {
+	.square, .block, .subgrid, .horizontal-bar, .vertical-bar {
 		user-select: none;
 	}
 
@@ -182,7 +186,9 @@
 		background-image: url('characters/JeremyMeeks.png');
 	}
 
-
+	.no-touch {
+		pointer-events: none;
+	}
 
 	.block[data-stage='2'], .block.pulse[data-stage='1'] {
 		z-index: 2;
@@ -237,6 +243,17 @@
 		flex-direction: column;
 	}
 
+	#touch-layer {
+		position: absolute;
+		z-index: 50;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+	}
+
 	dialog div {
 		padding: 5vh;
 		max-height: calc(100% - 10vh);
@@ -257,6 +274,7 @@
     transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
     display: inline-block;
     outline: none !important;
+    font-weight: 500;
 	}
 
 	dialog:not(.startscreen) button {
@@ -301,12 +319,15 @@
 
 	body button:hover {
 		background: #EF6C00;
-		color: white;
 	}
 
 	html body button:active {
 		background: #E65100;
 		border-color: #E65100;
+	}
+
+	button:active, button:hover {
+		color: white !important;
 	}
 
 	header button {
@@ -435,6 +456,8 @@
 
 		<section>
 
+			<div id='touch-layer'></div>
+
 			<div class='vertical-bar first'></div>
 			<div class='vertical-bar second'></div>
 			<div class='horizontal-bar first'></div>
@@ -506,7 +529,7 @@
 
 
 		<footer>
-			<span>v1.0</span>
+			<span>v1.1</span>
 			<span>By <em>thecel</em></span>
 		</footer>
 
@@ -647,6 +670,9 @@
 		}
 
 		function getRandomOpenSpot() {
+
+			$('#touch-layer').addClass('no-touch');
+
 			var spots = [];
 
 			for (var y = 0; y < getBoardSize(); y++) {
@@ -659,6 +685,8 @@
 			}
 
 			const put = spots[Math.floor(Math.random()*spots.length)];
+
+			$('#touch-layer').removeClass('no-touch');
 
 			return {x : put[0], y : put[1]};
 		}
@@ -706,6 +734,8 @@
 
 		function getBoardData() {
 
+			$('#touch-layer').addClass('no-touch');
+
 			if (gamemode === 'hardcore') {
 				
 				var boardContents = [
@@ -736,6 +766,9 @@
 					}
 				}
 			}
+
+			$('#touch-layer').removeClass('no-touch');
+
 			return boardContents;
 		}
 
@@ -826,6 +859,8 @@
 			}
 
 			var boardContents = getBoardData();
+
+			$('#touch-layer').addClass('no-touch');
 
 			if (dx === 0 && dy === -1) {
 
@@ -995,12 +1030,10 @@
 								$(elementAtLocation).removeClass('pulse');
 							});
 
-							var stage = Number($(elementAtLocation).attr('data-stage'));
-							setTimeout(() => {
-								$(elementAtLocation).css({
-									'background-image' : `url("characters/${characterProgression[stage]}")`,
-								}).attr('data-stage', (stage + 1).toString());
-							}, animDur / 2);
+							let stage = Number($(elementAtLocation).attr('data-stage'));
+							animCompletionScripts.push(() => {
+								$(elementAtLocation).attr('data-stage', (stage + 1).toString());
+							});
 						}
 
 						if (collapse[y][x]) {
@@ -1017,6 +1050,8 @@
 			if (t.includes('1') || t.includes('2') || t.includes('3')) {
 				animCompletionScripts.push(spawnSquare);
 			}
+
+			$('#touch-layer').removeClass('no-touch');
 		}
 
 		function keyMove(e) {
@@ -1039,7 +1074,7 @@
 
 		$(window).on('keydown', keyMove);
 
-		$('section').on('mousedown', (e) => {
+		$('#touch-layer').on('mousedown', (e) => {
 			mousePressed = [e.clientX, e.clientY];
 		})
 		.on('touchstart', (e) => {
@@ -1053,7 +1088,7 @@
 			const pos = [e.clientX, e.clientY];
 			const d = pos.map((el, i) => (el - mousePressed[i]));
 
-			if (d[0]**2 + d[1]**2 < ($('section')[0].offsetWidth / 5)**2) return;
+			if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
 
 
 
@@ -1075,7 +1110,7 @@
 			const pos = [e.touches[0].clientX, e.touches[0].clientY];
 			const d = pos.map((el, i) => (el - touchPressed[i]));
 
-			if (d[0]**2 + d[1]**2 < ($('section')[0].offsetWidth / 5)**2) return;
+			if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
 
 
 

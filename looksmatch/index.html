@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>Looksmatch: PSL 2048</title>
+	
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 
 	<style type="text/css">
 
@@ -13,8 +15,13 @@
 	body {
 		position: relative;
 		width: 100vw;
+
 		max-width: 85vh;
-		height: 100vh;
+		max-width: calc(var(--vh, 1vh) * 85);
+
+		height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  	height: calc(var(--vh, 1vh) * 100);
+
 		margin: 0 auto;
 	}
 
@@ -43,5 +50,17 @@
 	<div id='container'>
 		<iframe src="game.html"></iframe>
 	</div>
+
+	<script>
+		
+		function setVh() {
+		  let vh = window.innerHeight * 0.01;
+		  document.documentElement.style.setProperty('--vh', `${vh}px`);
+		}
+
+		window.addEventListener('resize', setVh);
+
+	</script>
+
 </body>
 </html>
