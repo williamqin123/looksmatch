@@ -9,23 +9,32 @@
 
 	<style type="text/css">
 
+		:root {
+		  --vu: calc(min(var(--vh), 100 / 85 * 1vw));
+		}
+
 	* {
 		vertical-align: top;
 	}
 
 	html, body {
 		margin: 0;
-		background: #263238;
+		background: #121212;
 		color: white;
 		font-family: 'Clear Sans', sans-serif;
-		font-size: 3vh;
-		width: 85vh;
+		font-size: calc(var(--vu) * 3);
+		width: 100vw;
 		line-height: 1.5;
+		overflow: hidden;
 	}
 
 	main {
-		width: 80vh;
-		margin: 0 auto;
+		position: fixed;
+		top: calc(var(--vh) * 50);
+		left: 50vw;
+		width: calc(var(--vu) * 80);
+		height: calc(var(--vu) * 100);
+		margin: calc(var(--vu) * -50) calc(var(--vu) * -40);
 	}
 
 	header, footer {
@@ -36,19 +45,19 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 10vh;
-		margin: 0 2vh;
+		height: calc(var(--vu) * 10);
+		margin: 0 calc(var(--vu) * 2);
 	}
 
 	h1 {
 		font-size: 1.5rem;
 		margin: 0;
-		color: #CFD8DC;
+		color: #F5F5F5;
 	}
 
 	footer {
 		font-size: 0.75rem;
-		color: #607D8B;
+		color: #757575;
 	}
 
 	dialog {
@@ -56,9 +65,9 @@
 	}
 		
 	section {
-		background: #37474F;
-		height: 80vh;
-		border-radius: 4vh;
+		background: #222222;
+		height: calc(var(--vu) * 80);
+		border-radius: calc(var(--vu) * 4);
 		font-size: 0;
 		position: relative;
 		overflow: hidden;
@@ -66,16 +75,16 @@
 	}
 
 	.subgrid {
-		width: calc(40.5vh);
-		height: calc(40.5vh);
+		width: calc(calc(var(--vu) * 40.5));
+		height: calc(calc(var(--vu) * 40.5));
 	}
 	.subgrid:nth-child(even) {
-		width: calc(39.5vh - 1px);
-		height: calc(39.5vh - 1px);
+		width: calc(calc(var(--vu) * 39.5) - 1px);
+		height: calc(calc(var(--vu) * 39.5) - 1px);
 	}
 
 	.hardcore section {
-		border-radius: 3vh;
+		border-radius: calc(var(--vu) * 3);
 	}
 
 	.square, .block, .subgrid, .horizontal-bar, .vertical-bar {
@@ -83,21 +92,21 @@
 	}
 
 	.square, .block, .block::after, .block::before {
-		width: 17.5vh;
-		height: 17.5vh;
-		border-radius: 2vh;
+		width: calc(var(--vu) * 17.5);
+		height: calc(var(--vu) * 17.5);
+		border-radius: calc(var(--vu) * 2);
 	}
 
 	.hardcore .square, .hardcore .block, .hardcore .block::after, .hardcore .block::before {
-		width: calc(67.5vh / 6);
-		height: calc(67.5vh / 6);
-		border-radius: 1.5vh;
+		width: calc(var(--vu) * 67.5 / 6);
+		height: calc(var(--vu) * 67.5 / 6);
+		border-radius: calc(var(--vu) * 1.5);
 	}
 
 	.square {
 		display: inline-block;
-		background: #455A64;
-		margin: 2vh 0 0 2vh;
+		background: #2c2c2c;
+		margin: calc(var(--vu) * 2) 0 0 calc(var(--vu) * 2);
 	}
 
 	.square, .subgrid {
@@ -105,7 +114,7 @@
 	}
 
 	.hardcore .square {
-		margin: 1.5vh 0 0 1.5vh;
+		margin: calc(var(--vu) * 1.5) 0 0 calc(var(--vu) * 1.5);
 	}
 
 	.square.flashing {
@@ -124,7 +133,7 @@
 	}
 
 	.block::before {
-		box-shadow: 0 0.25vh 1vh -0.5vh black;
+		box-shadow: 0 calc(var(--vu) * 0.25) calc(var(--vu) * 1) calc(var(--vu) * -0.5) black;
 		background-image: url('overlay-shadow.png');
 		z-index: 1;
 	}
@@ -137,53 +146,53 @@
 	.block {
 		position: absolute;
 		transition: top 0.25s ease-in-out, left 0.25s ease-in-out;
-		background-size: cover;
-		background-position: center center;
+		background-size: 1100% 100%, 1100% 100%;
 		animation: spawn 0.25s ease-in;
+		background-image: url('characters.png'), url('characters-lowres.png');
 	}
 
 	.block[data-stage='1'] {
-		background-image: url('characters/JewNose.png');
+		background-position: left center, left center;
 	}
 	.block[data-stage='2'] {
-		box-shadow: 0 0 0.3vh 0.05vh #616161;
-		background-image: url('characters/Eggman.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.3) calc(var(--vu) * 0.05) #616161;
+		background-position: -100% center, -100% center;
 	}
 	.block[data-stage='3'] {
-		box-shadow: 0 0 0.3vh 0.05vh #3f51b5;
-		background-image: url('characters/StBlackOps2Cel.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.3) calc(var(--vu) * 0.05) #3f51b5;
+		background-position: -200% center, -200% center;
 	}
 	.block[data-stage='4'] {
-		box-shadow: 0 0 0.35vh 0.1vh #2196f3;
-		background-image: url('characters/Jsanza29.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.35) calc(var(--vu) * 0.1) #2196f3;
+		background-position: -300% center, -300% center;
 	}
 	.block[data-stage='5'] {
-		box-shadow: 0 0 0.4vh 0.15vh #00bcd4;
-		background-image: url('characters/MarkZuckerberg.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.4) calc(var(--vu) * 0.15) #00bcd4;
+		background-position: -400% center, -400% center;
 	}
 	.block[data-stage='6'] {
-		box-shadow: 0 0 0.45vh 0.2vh #009688;
-		background-image: url('characters/SnoopDogg.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.45) calc(var(--vu) * 0.2) #009688;
+		background-position: -500% center, -500% center;
 	}
 	.block[data-stage='7'] {
-		box-shadow: 0 0 0.5vh 0.25vh #4caf50;
-		background-image: url('characters/RyanGosling.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.5) calc(var(--vu) * 0.25) #4caf50;
+		background-position: -600% center, -600% center;
 	}
 	.block[data-stage='8'] {
-		box-shadow: 0 0 0.55vh 0.3vh #ebd831;
-		background-image: url('characters/HenryCavill.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.55) calc(var(--vu) * 0.3) #ebd831;
+		background-position: -700% center, -700% center;
 	}
 	.block[data-stage='9'] {
-		box-shadow: 0 0 0.6vh 0.35vh #ffc107;
-		background-image: url('characters/JordanBarrett.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.6) calc(var(--vu) * 0.35) #ffc107;
+		background-position: -800% center, -800% center;
 	}
 	.block[data-stage='10'] {
-		box-shadow: 0 0 0.65vh 0.4vh #ff9800;
-		background-image: url('characters/DavidGandy.png');
+		box-shadow: 0 0 calc(var(--vu) * 0.75) calc(var(--vu) * 0.5) #ff9800;
+		background-position: -900% center, -900% center;
 	}
 	.block[data-stage='11'] {
-		box-shadow: 0 0 1vh 0.5vh #ff5722;
-		background-image: url('characters/JeremyMeeks.png');
+		box-shadow: 0 0 calc(var(--vu) * 1) calc(var(--vu) * 0.5) #ff5722;
+		background-position: -1000% center, -1000% center;
 	}
 
 	.no-touch {
@@ -235,7 +244,7 @@
 		top: 0;
 		left: 0;
 		background: rgba(255, 255, 255, 75%);
-		font-size: 3vh;
+		font-size: calc(var(--vu) * 3);
 		padding: 0;
 
 		justify-content: center;
@@ -255,8 +264,8 @@
 	}
 
 	dialog div {
-		padding: 5vh;
-		max-height: calc(100% - 10vh);
+		padding: calc(var(--vu) * 5);
+		max-height: calc(100% - var(--vu) * 10);
 		overflow-y: auto;
 	}
 
@@ -264,11 +273,11 @@
 		appearance: none;
     border: none;
     font: inherit;
-    padding: 2vh 2.5vh;
+    padding: calc(var(--vu) * 2) calc(var(--vu) * 2.5);
     line-height: 1;
-    border-radius: 1vh;
+    border-radius: calc(var(--vu) * 1);
     background: transparent;
-    border: 0.25vh solid #EF6C00;
+    border: calc(var(--vu) * 0.25) solid #EF6C00;
     color: #F57C00;
     cursor: pointer;
     transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
@@ -283,7 +292,7 @@
 
 	.vertical-bar, .horizontal-bar {
 		border-radius: 999px;
-		background: #263238;
+		background: #121212;
 		position: absolute;
 		display: none;
 	}
@@ -293,27 +302,27 @@
 	}
 
 	.vertical-bar {
-		height: 37vh;
-		width: 1vh;
-		left: 39.5vh;
+		height: calc(var(--vu) * 37);
+		width: calc(var(--vu) * 1);
+		left: calc(var(--vu) * 39.5);
 	}
 	.vertical-bar.first {
-		top: 1.5vh;
+		top: calc(var(--vu) * 1.5);
 	}
 	.vertical-bar.second {
-		top: 41.5vh;
+		top: calc(var(--vu) * 41.5);
 	}
 
 	.horizontal-bar {
-		width: 37vh;
-		height: 1vh;
-		top: 39.5vh;
+		width: calc(var(--vu) * 37);
+		height: calc(var(--vu) * 1);
+		top: calc(var(--vu) * 39.5);
 	}
 	.horizontal-bar.first {
-		left: 1.5vh;
+		left: calc(var(--vu) * 1.5);
 	}
 	.horizontal-bar.second {
-		left: 41.5vh;
+		left: calc(var(--vu) * 41.5);
 	}
 
 
@@ -331,16 +340,16 @@
 	}
 
 	header button {
-    padding: 1.3vh 2vh;
+    padding: calc(var(--vu) * 1.3) calc(var(--vu) * 2);
 	}
 
 
 
 	hr {
-		background: #263238;
+		background: #121212;
 		border: none;
 		border-radius: 9999px;
-		height: 0.5vh;
+		height: calc(var(--vu) * 0.5);
 	}
 
 
@@ -424,15 +433,15 @@
 	@keyframes flash {
 		0% {
 			transform: scale(1);
-			background: #455A64;
+			background: #2c2c2c;
 		}
 		50% {
 			transform: scale(1.1);
-			background: #546E7A;
+			background: #383838;
 		}
 		100% {
 			transform: scale(1);
-			background: #455A64;
+			background: #2c2c2c;
 		}
 	}
 
@@ -441,6 +450,19 @@
 	}
 
 	</style>
+
+		<script>
+		
+		function setVh() {
+		  let vh = window.innerHeight * 0.01;
+		  document.documentElement.style.setProperty('--vh', `${vh}px`);
+		}
+
+		window.addEventListener('resize', setVh);
+
+		setVh();
+
+	</script>
 
 </head>
 <body>
@@ -529,7 +551,7 @@
 
 
 		<footer>
-			<span>v1.1</span>
+			<span>v1.2</span>
 			<span>By <em>thecel</em></span>
 		</footer>
 
@@ -605,7 +627,7 @@
 		}
 
 		function vh(v) {
-		  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+		  var h = Math.max(window.innerHeight || 0);
 		  return (v * h) / 100;
 		}
 
@@ -620,6 +642,10 @@
 
 		function vmax(v) {
 		  return Math.max(vh(v), vw(v));
+		}
+
+		function vu(v) {
+			return Math.min(vh(v), 100 / 85 * vw(v));
 		}
 
 		const animDur = 250;
@@ -678,7 +704,7 @@
 			for (var y = 0; y < getBoardSize(); y++) {
 				for (var x = 0; x < getBoardSize(); x++) {
 					var squarePos = $('.square[data-index="' + (x + y * getBoardSize()) + '"]')[0].getBoundingClientRect();
-					if (!document.elementFromPoint(squarePos.left + vh(getTileSize() / 2), squarePos.top + vh(getTileSize() / 2)).className.includes('block')) {
+					if (!document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2)).className.includes('block')) {
 						spots.push([x, y]);
 					}
 				}
@@ -691,7 +717,7 @@
 			return {x : put[0], y : put[1]};
 		}
 
-		function toVhPosition(u) {
+		function toVuPosition(u) {
 			if (gamemode === 'hardcore') {
 				return 1.5 + u * (1.5 + getTileSize()) + 1.5 * (u >= 3);
 			}
@@ -707,7 +733,7 @@
 			const stage = [0, 1, 0][Math.floor(Math.random()*3)];
 
 			$('section').append(`
-				<div class='block' style='top: ${toVhPosition(xy.y)}vh; left: ${toVhPosition(xy.x)}vh;' data-stage='${stage + 1}'></div>
+				<div class='block' style='top: calc(var(--vu) * ${toVuPosition(xy.y)}); left: calc(var(--vu) * ${toVuPosition(xy.x)});' data-stage='${stage + 1}'></div>
 			`);
 			let spawningSquare = $($('.square').get(gamemodeTileIndices.indexOf(xy.x + xy.y * getBoardSize())));
 			spawningSquare.addClass('flashing').attr('data-animating', 'yes');
@@ -759,7 +785,7 @@
 			for (var y = 0; y < getBoardSize(); y++) {
 				for (var x = 0; x < getBoardSize(); x++) {
 					var squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
-					let elementAtLocation = document.elementFromPoint(squarePos.left + vh(getTileSize() / 2), squarePos.top + vh(getTileSize() / 2));
+					let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
 					
 					if (elementAtLocation.className.includes('block')) {
 						boardContents[y][x] = $(elementAtLocation).attr('data-stage');
@@ -1015,13 +1041,13 @@
 			for (var y = 0; y < getBoardSize(); y++) {
 				for (var x = 0; x < getBoardSize(); x++) {
 					let squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
-					let elementAtLocation = document.elementFromPoint(squarePos.left + vh(getTileSize() / 2), squarePos.top + vh(getTileSize() / 2));
+					let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
 					
-					let elementAtNewLocation = document.elementFromPoint(vh(getTileSize() / 2) + vh(toVhPosition(x + delta[y][x] * dx)), vh(getTileSize() / 2) + vh(toVhPosition(x + delta[y][x] * dy)));
+					let elementAtNewLocation = document.elementFromPoint(vu(getTileSize() / 2) + vu(toVuPosition(x + delta[y][x] * dx)), vh(getTileSize() / 2) + vu(toVuPosition(x + delta[y][x] * dy)));
 
 					if (elementAtLocation.className.includes('block')) {
-						$(elementAtLocation).css('top', toVhPosition(y + delta[y][x] * dy) + 'vh');
-						$(elementAtLocation).css('left', toVhPosition(x + delta[y][x] * dx) + 'vh');
+						$(elementAtLocation).css('top', 'calc(var(--vu) * ' + toVuPosition(y + delta[y][x] * dy) + ')');
+						$(elementAtLocation).css('left', 'calc(var(--vu) * ' + toVuPosition(x + delta[y][x] * dx) + ')');
 
 						if (promotion[y][x]) {
 							$(elementAtLocation).addClass('pulse no-anim');
@@ -1149,6 +1175,9 @@
 				animCompletionScripts = [];
 			}
 		});
+
+		var spriteSheet = new Image();
+		spriteSheet.src = 'characters.png';
 
 	</script>
 
