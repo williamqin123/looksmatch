@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Looksmatch Game Player</title>
+	<title>Looksmatch: a PSL game based on 2048</title>
 
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 
@@ -11,6 +11,15 @@
 
 		:root {
 		  --vu: calc(min(var(--vh), 100 / 85 * 1vw));
+
+		  --orange-200: #FFBC89;
+		  --orange-300: #FFA159;
+		  --orange-400: #FF8C35;
+		  --orange-500: #FF7811;
+		  --orange-600: #f96e00;
+		  --orange-700: #ef6200;
+		  --orange-800: #e55700;
+		  --orange-900: #d44300;
 		}
 
 	* {
@@ -155,43 +164,43 @@
 		background-position: left center, left center;
 	}
 	.block[data-stage='2'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.3) calc(var(--vu) * 0.05) #616161;
+		box-shadow: inset 0 0 0 1px #61616170, 0 0 calc(var(--vu) * 0.35) calc(var(--vu) * 0.05) #616161;
 		background-position: -100% center, -100% center;
 	}
 	.block[data-stage='3'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.3) calc(var(--vu) * 0.05) #3f51b5;
+		box-shadow: inset 0 0 0 1px #004cff80, 0 0 calc(var(--vu) * 0.4) calc(var(--vu) * 0.05) #004cff;
 		background-position: -200% center, -200% center;
 	}
 	.block[data-stage='4'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.35) calc(var(--vu) * 0.1) #2196f3;
+		box-shadow: inset 0 0 0 1px #0099ff90, 0 0 calc(var(--vu) * 0.45) calc(var(--vu) * 0.1) #0099ff;
 		background-position: -300% center, -300% center;
 	}
 	.block[data-stage='5'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.4) calc(var(--vu) * 0.15) #00bcd4;
+		box-shadow: inset 0 0 0 1px #00e2ffa0, 0 0 calc(var(--vu) * 0.5) calc(var(--vu) * 0.15) #00e2ff;
 		background-position: -400% center, -400% center;
 	}
 	.block[data-stage='6'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.45) calc(var(--vu) * 0.2) #009688;
+		box-shadow: inset 0 0 0 1px #00ffe5b0, 0 0 calc(var(--vu) * 0.55) calc(var(--vu) * 0.2) #00ffe5;
 		background-position: -500% center, -500% center;
 	}
 	.block[data-stage='7'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.5) calc(var(--vu) * 0.25) #4caf50;
+		box-shadow: inset 0 0 0 1px #00ff26c0, 0 0 calc(var(--vu) * 0.6) calc(var(--vu) * 0.25) #00ff26;
 		background-position: -600% center, -600% center;
 	}
 	.block[data-stage='8'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.55) calc(var(--vu) * 0.3) #ebd831;
+		box-shadow: inset 0 0 0 1px #ffea00d0, 0 0 calc(var(--vu) * 0.65) calc(var(--vu) * 0.3) #ffea00;
 		background-position: -700% center, -700% center;
 	}
 	.block[data-stage='9'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.6) calc(var(--vu) * 0.35) #ffc107;
+		box-shadow: inset 0 0 0 1px #ffbf00e0, 0 0 calc(var(--vu) * 0.7) calc(var(--vu) * 0.35) #ffbf00;
 		background-position: -800% center, -800% center;
 	}
 	.block[data-stage='10'] {
-		box-shadow: 0 0 calc(var(--vu) * 0.75) calc(var(--vu) * 0.5) #ff9800;
+		box-shadow: inset 0 0 0 1px #ff9800f0, 0 0 calc(var(--vu) * 0.8) calc(var(--vu) * 0.4) #ff9800;
 		background-position: -900% center, -900% center;
 	}
 	.block[data-stage='11'] {
-		box-shadow: 0 0 calc(var(--vu) * 1) calc(var(--vu) * 0.5) #ff5722;
+		box-shadow: inset 0 0 0 1px #ff3d00ff, 0 0 calc(var(--vu) * 1) calc(var(--vu) * 0.5) #ff3d00;
 		background-position: -1000% center, -1000% center;
 	}
 
@@ -269,16 +278,25 @@
 		overflow-y: auto;
 	}
 
-	button {
+	dialog:not(.startscreen) {
+		-webkit-backdrop-filter: blur(var(--vu));
+		backdrop-filter: blur(var(--vu));
+	}
+
+	dialog:not(.startscreen) button {
+		color: #D84315;
+	}
+
+	button, .light button, .dark .light button {
 		appearance: none;
     border: none;
     font: inherit;
-    padding: calc(var(--vu) * 2) calc(var(--vu) * 2.5);
+    padding: calc(var(--vu) * 2) calc(var(--vu) * 3);
     line-height: 1;
-    border-radius: calc(var(--vu) * 1);
+    border-radius: 9999px;
     background: transparent;
-    border: calc(var(--vu) * 0.25) solid #EF6C00;
-    color: #F57C00;
+    border: 2px solid var(--orange-700);
+    color: var(--orange-800);
     cursor: pointer;
     transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
     display: inline-block;
@@ -286,9 +304,55 @@
     font-weight: 500;
 	}
 
-	dialog:not(.startscreen) button {
-		color: #E65100;
+	.light button.solid, .light button:hover, .dark .light button.solid, .dark .light button:hover {
+		background: var(--orange-700);
 	}
+
+	.light button.solid:hover, .dark .light button.solid:hover {
+		background: var(--orange-800);
+		border-color: var(--orange-800);
+	}
+
+	.light button:active, .dark .light button:active {
+		background: var(--orange-900) !important;
+		border-color: var(--orange-900) !important;
+	}
+
+	.dark button, .light .dark button {
+		border-color: var(--orange-400);
+		color: var(--orange-300);
+	}
+
+	.dark button.solid, .dark button:hover, .light .dark button.solid, .light .dark button:hover {
+		background: var(--orange-400);
+	}
+
+	.dark button.solid:hover, .light .dark button.solid:hover {
+		background: var(--orange-300);
+		border-color: var(--orange-300);
+	}
+
+	.dark button:active, .light .dark button:active {
+		background: var(--orange-500) !important;
+		border-color: var(--orange-500) !important;
+	}
+
+	.dark button.solid, .dark button:hover, .dark button:active,
+	.light .dark button.solid, .light .dark button:hover, .light .dark button:active {
+		color: black;
+	}
+
+	.light button.solid, .light button:hover, .light button:active,
+	.dark .light button.solid, .dark .light button:hover, .dark .light button:active {
+		color: white;
+	}
+
+	header button {
+    padding: calc(var(--vu) * 1.3) calc(var(--vu) * 2);
+	}
+
+
+
 
 	.vertical-bar, .horizontal-bar {
 		border-radius: 999px;
@@ -326,30 +390,15 @@
 	}
 
 
-	body button:hover {
-		background: #EF6C00;
-	}
 
-	html body button:active {
-		background: #E65100;
-		border-color: #E65100;
-	}
-
-	button:active, button:hover {
-		color: white !important;
-	}
-
-	header button {
-    padding: calc(var(--vu) * 1.3) calc(var(--vu) * 2);
-	}
 
 
 
 	hr {
-		background: #121212;
+		background: black;
 		border: none;
 		border-radius: 9999px;
-		height: calc(var(--vu) * 0.5);
+		height: 2px;
 	}
 
 
@@ -464,14 +513,25 @@
 
 	</script>
 
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123661131-5"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-123661131-5');
+	</script>
+
+
 </head>
-<body>
+<body class='dark'>
 
 	<main>
 
 		<header>
 			<h1>looksmatch</h1>
-			<button onclick='if(!gameIsOver()){$("#restart-confirmation").addClass("fadein fast");$("#new-game").addClass("hidden");}else{resetGame();}' id='new-game' class='hidden'>New game</button>
+			<button onclick='if(!gameIsOver()){$("#restart-confirmation").addClass("fadein fast");$("#new-game").addClass("hidden");}else{resetGame();}' id='new-game' class='hidden solid'>New game</button>
 		</header>
 
 
@@ -485,7 +545,7 @@
 			<div class='horizontal-bar first'></div>
 			<div class='horizontal-bar second'></div>
 
-			<dialog id='game-over'>
+			<dialog id='game-over' class='light'>
 				<div>
 		
 					<h2>Game over :(</h2>
@@ -494,12 +554,12 @@
 						No more moves left!
 					</p>
 
-					<button onclick="closeDialog(event);">Close</button> <button onclick="closeDialog(event);resetGame();">New game</button>
+					<button onclick="closeDialog(event);">Close</button> <button onclick="closeDialog(event);resetGame();" class='solid'>New game</button>
 				</div>
 
 			</dialog>
 
-			<dialog id='restart-confirmation'>
+			<dialog id='restart-confirmation' class='light'>
 				<div>
 		
 					<h2>Start new game?</h2>
@@ -508,7 +568,7 @@
 						Are you sure?
 					</p>
 
-					<button onclick="closeDialog(event);">No</button> <button onclick="closeDialog(event);resetGame();">Yes</button>
+					<button onclick="closeDialog(event);">No</button> <button onclick="closeDialog(event);resetGame();" class='solid'>Yes</button>
 				</div>
 
 			</dialog>
@@ -551,7 +611,7 @@
 
 
 		<footer>
-			<span>v1.2</span>
+			<span>v1.3</span>
 			<span>By <em>thecel</em></span>
 		</footer>
 
@@ -701,8 +761,8 @@
 
 			var spots = [];
 
-			for (var y = 0; y < getBoardSize(); y++) {
-				for (var x = 0; x < getBoardSize(); x++) {
+			for (let y = 0; y < getBoardSize(); y++) {
+				for (let x = 0; x < getBoardSize(); x++) {
 					var squarePos = $('.square[data-index="' + (x + y * getBoardSize()) + '"]')[0].getBoundingClientRect();
 					if (!document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2)).className.includes('block')) {
 						spots.push([x, y]);
@@ -719,7 +779,7 @@
 
 		function toVuPosition(u) {
 			if (gamemode === 'hardcore') {
-				return 1.5 + u * (1.5 + getTileSize()) + 1.5 * (u >= 3);
+				return 1.5 + u * (1.5 + getTileSize()) + 2 * (u >= 3);
 			}
 			return 2 + u * (2 + getTileSize());
 		}
@@ -741,7 +801,7 @@
 			spawningSquare.one('animationend', () => {
 				spawningSquare.removeClass('flashing').attr('data-animating', 'no');
 
-				for (var scr of spawnCompletionScripts) {
+				for (let scr of spawnCompletionScripts) {
 					scr();
 				}
 				spawnCompletionScripts = [];
@@ -782,8 +842,8 @@
 				];
 			}
 
-			for (var y = 0; y < getBoardSize(); y++) {
-				for (var x = 0; x < getBoardSize(); x++) {
+			for (let y = 0; y < getBoardSize(); y++) {
+				for (let x = 0; x < getBoardSize(); x++) {
 					var squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
 					let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
 					
@@ -890,8 +950,8 @@
 
 			if (dx === 0 && dy === -1) {
 
-				for (var x = 0; x < getBoardSize(); x++) {
-					for (var y = 0; y < getBoardSize(); y++) {
+				for (let x = 0; x < getBoardSize(); x++) {
+					for (let y = 0; y < getBoardSize(); y++) {
 
 						const xBarrier = (hardcore ? (x >= 3 ? 3 : 0) : 0);
 						const yBarrier = (hardcore ? (y >= 3 ? 3 : 0) : 0);
@@ -902,7 +962,7 @@
 
 						let blockDelta = yBarrier - y;
 
-						for (var ny = y - 1; ny >= yBarrier; ny--) {
+						for (let ny = y - 1; ny >= yBarrier; ny--) {
 							if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
 								blockDelta = ny - y + 1;
 								break;
@@ -927,8 +987,8 @@
 
 			else if (dx === 0 && dy === 1) {
 
-				for (var x = 0; x < getBoardSize(); x++) {
-					for (var y = getBoardSize() - 1; y >= 0; y--) {
+				for (let x = 0; x < getBoardSize(); x++) {
+					for (let y = getBoardSize() - 1; y >= 0; y--) {
 
 						const xBarrier = (hardcore ? (x >= 3 ? 0 : 3) : 0);
 						const yBarrier = (hardcore ? (y >= 3 ? 0 : 3) : 0);
@@ -939,7 +999,7 @@
 
 						let blockDelta = getBoardSize() - 1 - yBarrier - y;
 
-						for (var ny = y + 1; ny < getBoardSize() - yBarrier; ny++) {
+						for (let ny = y + 1; ny < getBoardSize() - yBarrier; ny++) {
 							if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
 								blockDelta = ny - y - 1;
 								break;
@@ -964,8 +1024,8 @@
 
 			else if (dx === -1 && dy === 0) {
 
-				for (var y = 0; y < getBoardSize(); y++) {
-					for (var x = 0; x < getBoardSize(); x++) {
+				for (let y = 0; y < getBoardSize(); y++) {
+					for (let x = 0; x < getBoardSize(); x++) {
 
 						const xBarrier = (hardcore ? (x >= 3 ? 3 : 0) : 0);
 						const yBarrier = (hardcore ? (y >= 3 ? 3 : 0) : 0);
@@ -976,7 +1036,7 @@
 
 						let blockDelta = xBarrier - x;
 
-						for (var nx = x - 1; nx >= xBarrier; nx--) {
+						for (let nx = x - 1; nx >= xBarrier; nx--) {
 							if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
 								blockDelta = nx - x + 1;
 								break;
@@ -1001,8 +1061,8 @@
 
 			else if (dx === 1 && dy === 0) {
 
-				for (var y = 0; y < getBoardSize(); y++) {
-					for (var x = getBoardSize() - 1; x >= 0; x--) {
+				for (let y = 0; y < getBoardSize(); y++) {
+					for (let x = getBoardSize() - 1; x >= 0; x--) {
 
 						const xBarrier = (hardcore ? (x >= 3 ? 0 : 3) : 0);
 						const yBarrier = (hardcore ? (y >= 3 ? 0 : 3) : 0);
@@ -1013,7 +1073,7 @@
 
 						let blockDelta = getBoardSize() - 1 - xBarrier - x;
 
-						for (var nx = x + 1; nx < getBoardSize() - xBarrier; nx++) {
+						for (let nx = x + 1; nx < getBoardSize() - xBarrier; nx++) {
 							if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
 								blockDelta = nx - x - 1;
 								break;
@@ -1038,8 +1098,8 @@
 
 		
 
-			for (var y = 0; y < getBoardSize(); y++) {
-				for (var x = 0; x < getBoardSize(); x++) {
+			for (let y = 0; y < getBoardSize(); y++) {
+				for (let x = 0; x < getBoardSize(); x++) {
 					let squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
 					let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
 					
