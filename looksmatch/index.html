@@ -1256,7 +1256,9 @@
 		const pos = [e.touches[0].clientX, e.touches[0].clientY];
 		const d = pos.map((el, i) => (el - touchPressed[i]));
 
-		if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
+		//if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
+
+		if (!swipeZoneDetect(d[0], d[1], touchPressed[2])) return;
 
 
 
