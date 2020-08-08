@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Looksmatch: a PSL game based on 2048</title>
+	<title>LOOKSMATCH: a PSL-themed puzzle game based on 2048</title>
 
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 
@@ -76,11 +76,14 @@
 	section {
 		background: #222222;
 		height: calc(var(--vu) * 80);
-		border-radius: calc(var(--vu) * 4);
 		font-size: 0;
 		position: relative;
 		overflow: hidden;
 		transition: border-radius 0.5s ease-out;
+	}
+
+	section, .dialog {
+		border-radius: calc(var(--vu) * 4);
 	}
 
 	.subgrid {
@@ -92,7 +95,7 @@
 		height: calc(calc(var(--vu) * 39.5) - 1px);
 	}
 
-	.hardcore section {
+	.hardcore section, .hardcore dialog {
 		border-radius: calc(var(--vu) * 3);
 	}
 
@@ -164,43 +167,43 @@
 		background-position: left center, left center;
 	}
 	.block[data-stage='2'] {
-		box-shadow: inset 0 0 0 1px #61616170, 0 0 calc(var(--vu) * 0.35) calc(var(--vu) * 0.05) #616161;
+		box-shadow: inset 0 0 0 1px #6161616e, 0 0 calc(var(--vu) * 0.201326592) 0 #616161;
 		background-position: -100% center, -100% center;
 	}
 	.block[data-stage='3'] {
-		box-shadow: inset 0 0 0 1px #004cff80, 0 0 calc(var(--vu) * 0.4) calc(var(--vu) * 0.05) #004cff;
+		box-shadow: inset 0 0 0 1px #004cff80, 0 0 calc(var(--vu) * 0.25165824) 0 #004cff;
 		background-position: -200% center, -200% center;
 	}
 	.block[data-stage='4'] {
-		box-shadow: inset 0 0 0 1px #0099ff90, 0 0 calc(var(--vu) * 0.45) calc(var(--vu) * 0.1) #0099ff;
+		box-shadow: inset 0 0 0 1px #0099ff88, 0 0 calc(var(--vu) * 0.3145728) 0 #0099ff;
 		background-position: -300% center, -300% center;
 	}
 	.block[data-stage='5'] {
-		box-shadow: inset 0 0 0 1px #00e2ffa0, 0 0 calc(var(--vu) * 0.5) calc(var(--vu) * 0.15) #00e2ff;
+		box-shadow: inset 0 0 0 1px #00e2ff97, 0 0 calc(var(--vu) * 0.393216) 0 #00e2ff;
 		background-position: -400% center, -400% center;
 	}
 	.block[data-stage='6'] {
-		box-shadow: inset 0 0 0 1px #00ffe5b0, 0 0 calc(var(--vu) * 0.55) calc(var(--vu) * 0.2) #00ffe5;
+		box-shadow: inset 0 0 0 1px #00ffe5a7, 0 0 calc(var(--vu) * 0.49152) 0 #00ffe5;
 		background-position: -500% center, -500% center;
 	}
 	.block[data-stage='7'] {
-		box-shadow: inset 0 0 0 1px #00ff26c0, 0 0 calc(var(--vu) * 0.6) calc(var(--vu) * 0.25) #00ff26;
+		box-shadow: inset 0 0 0 1px #00ff26c0, 0 0 calc(var(--vu) * 0.6144) 0 #00ff26;
 		background-position: -600% center, -600% center;
 	}
 	.block[data-stage='8'] {
-		box-shadow: inset 0 0 0 1px #ffea00d0, 0 0 calc(var(--vu) * 0.65) calc(var(--vu) * 0.3) #ffea00;
+		box-shadow: inset 0 0 0 1px #ffea00ba, 0 0 calc(var(--vu) * 0.768) 0 #ffea00;
 		background-position: -700% center, -700% center;
 	}
 	.block[data-stage='9'] {
-		box-shadow: inset 0 0 0 1px #ffbf00e0, 0 0 calc(var(--vu) * 0.7) calc(var(--vu) * 0.35) #ffbf00;
+		box-shadow: inset 0 0 0 1px #ffbf00cd, 0 0 calc(var(--vu) * 0.96) 0 #ffbf00;
 		background-position: -800% center, -800% center;
 	}
 	.block[data-stage='10'] {
-		box-shadow: inset 0 0 0 1px #ff9800f0, 0 0 calc(var(--vu) * 0.8) calc(var(--vu) * 0.4) #ff9800;
+		box-shadow: inset 0 0 0 1px #ff9800e6, 0 0 calc(var(--vu) * 1.2) 0 #ff9800;
 		background-position: -900% center, -900% center;
 	}
 	.block[data-stage='11'] {
-		box-shadow: inset 0 0 0 1px #ff3d00ff, 0 0 calc(var(--vu) * 1) calc(var(--vu) * 0.5) #ff3d00;
+		box-shadow: inset 0 0 0 1px #ff3d00ff, 0 0 calc(var(--vu) * 1.5) 0 #ff3d00;
 		background-position: -1000% center, -1000% center;
 	}
 
@@ -291,11 +294,11 @@
 		appearance: none;
     border: none;
     font: inherit;
-    padding: calc(var(--vu) * 2) calc(var(--vu) * 3);
+    padding: calc(var(--vu) * 2 - max(1px, var(--vu) * 0.25)) calc(var(--vu) * 3 - max(1px, var(--vu) * 0.25));
     line-height: 1;
     border-radius: 9999px;
     background: transparent;
-    border: 2px solid var(--orange-700);
+    border: calc(max(1px, var(--vu) * 0.25)) solid var(--orange-700);
     color: var(--orange-800);
     cursor: pointer;
     transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
@@ -348,7 +351,8 @@
 	}
 
 	header button {
-    padding: calc(var(--vu) * 1.3) calc(var(--vu) * 2);
+    padding: calc(var(--vu) * 1.25 - max(1px, var(--vu) * 0.25)) calc(var(--vu) * 2 - max(1px, var(--vu) * 0.25));
+    margin-right: calc(var(--vu) * -2);
 	}
 
 
@@ -398,7 +402,7 @@
 		background: black;
 		border: none;
 		border-radius: 9999px;
-		height: 2px;
+		height: calc(max(2px, var(--vu) * 0.25));
 	}
 
 
@@ -498,16 +502,47 @@
 		visibility: hidden;
 	}
 
+
+	/* ========== */
+
+
+	@media 
+	(-webkit-min-device-pixel-ratio: 2), 
+	(min-resolution: 192dpi) { 
+		.block[data-stage='2'] {
+			box-shadow: inset 0 0 0 0.5px #6161616e, 0 0 calc(var(--vu) * 0.201326592) 0 #616161;
+			background-position: -100% center, -100% center;
+		}
+		.block[data-stage='3'] {
+			box-shadow: inset 0 0 0 0.5px #004cff80, 0 0 calc(var(--vu) * 0.25165824) 0 #004cff;
+			background-position: -200% center, -200% center;
+		}
+		.block[data-stage='4'] {
+			box-shadow: inset 0 0 0 0.5px #0099ff88, 0 0 calc(var(--vu) * 0.3145728) 0 #0099ff;
+			background-position: -300% center, -300% center;
+		}
+		.block[data-stage='5'] {
+			box-shadow: inset 0 0 0 0.5px #00e2ff97, 0 0 calc(var(--vu) * 0.393216) 0 #00e2ff;
+			background-position: -400% center, -400% center;
+		}
+		.block[data-stage='6'] {
+			box-shadow: inset 0 0 0 0.5px #00ffe5a7, 0 0 calc(var(--vu) * 0.49152) 0 #00ffe5;
+			background-position: -500% center, -500% center;
+		}
+		.block[data-stage='7'] {
+			box-shadow: inset 0 0 0 0.5px #00ff26c0, 0 0 calc(var(--vu) * 0.6144) 0 #00ff26;
+			background-position: -600% center, -600% center;
+		}
+	}
+
 	</style>
 
-		<script>
+	<script>
 		
 		function setVh() {
 		  let vh = window.innerHeight * 0.01;
 		  document.documentElement.style.setProperty('--vh', `${vh}px`);
 		}
-
-		window.addEventListener('resize', setVh);
 
 		setVh();
 
@@ -611,7 +646,7 @@
 
 
 		<footer>
-			<span>v1.3</span>
+			<span>v1.4</span>
 			<span>By <em>thecel</em></span>
 		</footer>
 
@@ -622,625 +657,658 @@
 
 	<script>
 
-		"use strict";
+	"use strict";
 
-		var gamemodeTileIndices;
+	const throttle = (func, limit) => {
+	  let inThrottle
+	  return function() {
+	    const args = arguments
+	    const context = this
+	    if (!inThrottle) {
+	      func.apply(context, args)
+	      inThrottle = true
+	      setTimeout(() => inThrottle = false, limit)
+	    }
+	  }
+	}
 
-		var gamemode;
 
-		const maxStage = 12;
 
-		function closeDialog(e) {
-			$(e.target).closest('dialog').removeClass('fadein fast');
-			$('#new-game').removeClass('hidden');
+	var gamemodeTileIndices;
+
+	var gamemode;
+
+	const maxStage = 12;
+
+	function closeDialog(e) {
+		$(e.target).closest('dialog').removeClass('fadein fast');
+		$('#new-game').removeClass('hidden');
+	}
+
+	function resetGame() {
+		$('#new-game').addClass('hidden');
+		$('#mode-select').addClass('startscreen');
+		$('body').removeClass(gamemode);
+		$('.subgrid, .square, .block').remove();
+	}
+
+	function startGame(mode) {
+
+		$('#new-game').removeClass('hidden');
+
+		$('#mode-select').removeClass('startscreen');
+
+		gamemode = mode;
+
+		$('body').addClass(mode);
+
+		switch (mode) {
+			case "classic":
+
+				gamemodeTileIndices = Array.from(Array(16).keys());
+
+				$('section').prepend('<span class="square"></span>'.repeat(16));
+
+				break;
+
+			case "hardcore":
+
+				gamemodeTileIndices = [
+					0, 1, 2, 6, 7, 8, 12, 13, 14,
+					3, 4, 5, 9, 10, 11, 15, 16, 17,
+					18, 19, 20, 24, 25, 26, 30, 31, 32,
+					21, 22, 23, 27, 28, 29, 33, 34, 35
+				];
+				$('section').prepend(`<div class='subgrid'>${'<span class="square small"></span>'.repeat(9)}</div>`.repeat(4));
+
+				break;
 		}
 
-		function resetGame() {
-			$('#new-game').addClass('hidden');
-			$('#mode-select').addClass('startscreen');
-			$('body').removeClass(gamemode);
-			$('.subgrid, .square, .block').remove();
-		}
+		$('.square').each(function (index) {
+			$(this).attr('data-index', gamemodeTileIndices[index]);
+		});
 
-		function startGame(mode) {
+		spawnSquare();
+	}
 
-			$('#new-game').removeClass('hidden');
+	function areAnimationsPlaying() {
+		//console.log($('[data-animating="yes"]').length);
+		return $('[data-animating="yes"]').length > 0;
+	}
 
-			$('#mode-select').removeClass('startscreen');
+	function vh(v) {
+	  var h = Math.max(window.innerHeight || 0);
+	  return (v * h) / 100;
+	}
 
-			gamemode = mode;
+	function vw(v) {
+	  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	  return (v * w) / 100;
+	}
 
-			$('body').addClass(mode);
+	function vmin(v) {
+	  return Math.min(vh(v), vw(v));
+	}
 
-			switch (mode) {
-				case "classic":
+	function vmax(v) {
+	  return Math.max(vh(v), vw(v));
+	}
 
-					gamemodeTileIndices = Array.from(Array(16).keys());
+	function vu(v) {
+		return Math.min(vh(v), 100 / 85 * vw(v));
+	}
 
-					$('section').prepend('<span class="square"></span>'.repeat(16));
+	const animDur = 250;
 
-					break;
+	const transpose = m => m[0].map((x,i) => m.map(x => x[i]));
 
-				case "hardcore":
+	const characterProgression = [
+		'JewNose.png',
+		'Eggman.png',
+		'StBlackOps2Cel.png',
+		'Jsanza29.png',
+		'MarkZuckerberg.png',
+		'SnoopDogg.png',
+		'RyanGosling.png',
+		'HenryCavill.png',
+		'JordanBarrett.png',
+		'DavidGandy.png',
+		'JeremyMeeks.png'
+	];
 
-					gamemodeTileIndices = [
-						0, 1, 2, 6, 7, 8, 12, 13, 14,
-						3, 4, 5, 9, 10, 11, 15, 16, 17,
-						18, 19, 20, 24, 25, 26, 30, 31, 32,
-						21, 22, 23, 27, 28, 29, 33, 34, 35
-					];
-					$('section').prepend(`<div class='subgrid'>${'<span class="square small"></span>'.repeat(9)}</div>`.repeat(4));
+	function gameOver() {
+		$('#game-over').addClass('fadein');
+	}
 
-					break;
-			}
+	function getBoardSize() {
+		if (gamemode === 'classic') return 4;
+		else if (gamemode === 'hardcore') return 6;
+		return 4;
+	}
 
-			$('.square').each(function (index) {
-				$(this).attr('data-index', gamemodeTileIndices[index]);
-			});
+	function getTileSize() {
+		if (gamemode === 'classic') return 17.5;
+		else if (gamemode === 'hardcore') return 67.5 / 6;
+		return 17.5;
+	}
 
-			spawnSquare();
-		}
+	function gameIsOver() {
 
-		function areAnimationsPlaying() {
-			console.log($('[data-animating="yes"]').length);
-			return $('[data-animating="yes"]').length > 0;
-		}
+		const d = getBoardData();
 
-		function vh(v) {
-		  var h = Math.max(window.innerHeight || 0);
-		  return (v * h) / 100;
-		}
+		if (JSON.stringify(d).replace(/[^0-9]/gmi, '').length < $('.square').length) return false;
 
-		function vw(v) {
-		  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-		  return (v * w) / 100;
-		}
+		const checkString = (JSON.stringify(d) + JSON.stringify(transpose(d))).replace(/[^0-9\[\]]/gmi, '');
 
-		function vmin(v) {
-		  return Math.min(vh(v), vw(v));
-		}
+		//console.log(checkString);
 
-		function vmax(v) {
-		  return Math.max(vh(v), vw(v));
-		}
+		return !/([0-9])\1+/gmi.test(checkString);
+	}
 
-		function vu(v) {
-			return Math.min(vh(v), 100 / 85 * vw(v));
-		}
+	function getRandomOpenSpot() {
 
-		const animDur = 250;
+		$('#touch-layer').addClass('no-touch');
 
-		const transpose = m => m[0].map((x,i) => m.map(x => x[i]));
+		var spots = [];
 
-		const characterProgression = [
-			'JewNose.png',
-			'Eggman.png',
-			'StBlackOps2Cel.png',
-			'Jsanza29.png',
-			'MarkZuckerberg.png',
-			'SnoopDogg.png',
-			'RyanGosling.png',
-			'HenryCavill.png',
-			'JordanBarrett.png',
-			'DavidGandy.png',
-			'JeremyMeeks.png'
-		];
-
-		function gameOver() {
-			$('#game-over').addClass('fadein');
-		}
-
-		function getBoardSize() {
-			if (gamemode === 'classic') return 4;
-			else if (gamemode === 'hardcore') return 6;
-			return 4;
-		}
-
-		function getTileSize() {
-			if (gamemode === 'classic') return 17.5;
-			else if (gamemode === 'hardcore') return 68 / 6;
-			return 17.5;
-		}
-
-		function gameIsOver() {
-
-			const d = getBoardData();
-
-			if (JSON.stringify(d).replace(/[^0-9]/gmi, '').length < $('.square').length) return false;
-
-			const checkString = (JSON.stringify(d) + JSON.stringify(transpose(d))).replace(/[^0-9\[\]]/gmi, '');
-
-			console.log(checkString);
-
-			return !/([0-9])\1+/gmi.test(checkString);
-		}
-
-		function getRandomOpenSpot() {
-
-			$('#touch-layer').addClass('no-touch');
-
-			var spots = [];
-
-			for (let y = 0; y < getBoardSize(); y++) {
-				for (let x = 0; x < getBoardSize(); x++) {
-					var squarePos = $('.square[data-index="' + (x + y * getBoardSize()) + '"]')[0].getBoundingClientRect();
-					if (!document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2)).className.includes('block')) {
-						spots.push([x, y]);
-					}
+		for (let y = 0; y < getBoardSize(); y++) {
+			for (let x = 0; x < getBoardSize(); x++) {
+				var squarePos = $('.square[data-index="' + (x + y * getBoardSize()) + '"]')[0].getBoundingClientRect();
+				if (!document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2)).className.includes('block')) {
+					spots.push([x, y]);
 				}
 			}
-
-			const put = spots[Math.floor(Math.random()*spots.length)];
-
-			$('#touch-layer').removeClass('no-touch');
-
-			return {x : put[0], y : put[1]};
 		}
 
-		function toVuPosition(u) {
-			if (gamemode === 'hardcore') {
-				return 1.5 + u * (1.5 + getTileSize()) + 2 * (u >= 3);
+		const put = spots[Math.floor(Math.random()*spots.length)];
+
+		$('#touch-layer').removeClass('no-touch');
+
+		return {x : put[0], y : put[1]};
+	}
+
+	function toVuPosition(u) {
+		if (gamemode === 'hardcore') {
+			return 1.5 + u * (1.5 + getTileSize()) + 2 * (u >= 3);
+		}
+		return 2 + u * (2 + getTileSize());
+	}
+
+	function spawnSquare() {
+
+		const xy = getRandomOpenSpot();
+
+		//console.log(`${xy.x},${xy.y}`);
+
+		const stage = [0, 1, 0][Math.floor(Math.random()*3)];
+
+		$('section').append(`
+			<div class='block' style='top: calc(var(--vu) * ${toVuPosition(xy.y)}); left: calc(var(--vu) * ${toVuPosition(xy.x)});' data-stage='${stage + 1}'></div>
+		`);
+		let spawningSquare = $($('.square').get(gamemodeTileIndices.indexOf(xy.x + xy.y * getBoardSize())));
+		spawningSquare.addClass('flashing').attr('data-animating', 'yes');
+
+		spawningSquare.one('animationend', () => {
+			spawningSquare.removeClass('flashing').attr('data-animating', 'no');
+
+			for (let scr of spawnCompletionScripts) {
+				scr();
 			}
-			return 2 + u * (2 + getTileSize());
+			spawnCompletionScripts = [];
+
+			if (gameIsOver()) gameOver();
+		});
+	}
+
+	var queued = false;
+
+	var gdx = 0;
+	var gdy = 0;
+
+	var animCompletionScripts = [];
+	var spawnCompletionScripts = [];
+
+	function getBoardData() {
+
+		$('#touch-layer').addClass('no-touch');
+
+		if (gamemode === 'hardcore') {
+			
+			var boardContents = [
+				[null, null, null, null, null, null],
+				[null, null, null, null, null, null],
+				[null, null, null, null, null, null],
+				[null, null, null, null, null, null],
+				[null, null, null, null, null, null],
+				[null, null, null, null, null, null]
+			];
+		}
+		else {
+			var boardContents = [
+				[null, null, null, null],
+				[null, null, null, null],
+				[null, null, null, null],
+				[null, null, null, null]
+			];
 		}
 
-		function spawnSquare() {
-
-			const xy = getRandomOpenSpot();
-
-			console.log(`${xy.x},${xy.y}`);
-
-			const stage = [0, 1, 0][Math.floor(Math.random()*3)];
-
-			$('section').append(`
-				<div class='block' style='top: calc(var(--vu) * ${toVuPosition(xy.y)}); left: calc(var(--vu) * ${toVuPosition(xy.x)});' data-stage='${stage + 1}'></div>
-			`);
-			let spawningSquare = $($('.square').get(gamemodeTileIndices.indexOf(xy.x + xy.y * getBoardSize())));
-			spawningSquare.addClass('flashing').attr('data-animating', 'yes');
-
-			spawningSquare.one('animationend', () => {
-				spawningSquare.removeClass('flashing').attr('data-animating', 'no');
-
-				for (let scr of spawnCompletionScripts) {
-					scr();
-				}
-				spawnCompletionScripts = [];
-
-				if (gameIsOver()) gameOver();
-			});
-		}
-
-		var queued = false;
-
-		var gdx = 0;
-		var gdy = 0;
-
-		var animCompletionScripts = [];
-		var spawnCompletionScripts = [];
-
-		function getBoardData() {
-
-			$('#touch-layer').addClass('no-touch');
-
-			if (gamemode === 'hardcore') {
+		for (let y = 0; y < getBoardSize(); y++) {
+			for (let x = 0; x < getBoardSize(); x++) {
+				var squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
+				let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
 				
-				var boardContents = [
-					[null, null, null, null, null, null],
-					[null, null, null, null, null, null],
-					[null, null, null, null, null, null],
-					[null, null, null, null, null, null],
-					[null, null, null, null, null, null],
-					[null, null, null, null, null, null]
-				];
+				if (elementAtLocation.className.includes('block')) {
+					boardContents[y][x] = $(elementAtLocation).attr('data-stage');
+				}
 			}
-			else {
-				var boardContents = [
-					[null, null, null, null],
-					[null, null, null, null],
-					[null, null, null, null],
-					[null, null, null, null]
-				];
+		}
+
+		$('#touch-layer').removeClass('no-touch');
+
+		return boardContents;
+	}
+
+	function slide(dx, dy) {
+
+		if (areAnimationsPlaying()) {
+			if (!queued) {
+				//console.log('added to queue');
+				queued = true;
+				gdx = dx;
+				gdy = dy;
+				spawnCompletionScripts.push(() => {queued = false; slide(gdx, gdy)});
 			}
+			return;
+		}
+
+		//console.log('animations are not playing');
+
+		const hardcore = gamemode === 'hardcore';
+
+		if (gamemode === 'classic') {
+
+			var delta = [
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0]
+			];
+
+			var rDelta = [
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0]
+			];
+
+			var promotion = [
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false]
+			];
+
+			var collapse = [
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false],
+				[false, false, false, false]
+			];
+
+		} else if (hardcore) {
+
+			var delta = [
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0]
+			];
+
+			var rDelta = [
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0]
+			];
+
+			var promotion = [
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false]
+			];
+
+			var collapse = [
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false],
+				[false, false, false, false, false, false]
+			];
+		}
+
+		var boardContents = getBoardData();
+
+		$('#touch-layer').addClass('no-touch');
+
+		if (dx === 0 && dy === -1) {
+
+			for (let x = 0; x < getBoardSize(); x++) {
+				for (let y = 0; y < getBoardSize(); y++) {
+
+					const xBarrier = (hardcore ? (x >= 3 ? 3 : 0) : 0);
+					const yBarrier = (hardcore ? (y >= 3 ? 3 : 0) : 0);
+
+					if (!boardContents[y][x]) {
+						continue;
+					}
+
+					let blockDelta = yBarrier - y;
+
+					for (let ny = y - 1; ny >= yBarrier; ny--) {
+						if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
+							blockDelta = ny - y + 1;
+							break;
+						}
+					}
+
+					if (hardcore) {
+						if (y === 3) blockDelta = -1 * !(boardContents[y - 1][x] && boardContents[y - 1][x] !== boardContents[y][x]);
+					}
+
+					if (blockDelta === 0) continue;
+
+					delta[y][x] = blockDelta * dy;
+
+					boardContents[y + blockDelta][x] = (boardContents[y + blockDelta][x] === boardContents[y][x]) ? (() => {promotion[y + blockDelta + rDelta[y + blockDelta][x]][x] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+					boardContents[y][x] = null;
+
+					rDelta[y + blockDelta][x] = -blockDelta;
+				}
+			}
+		}
+
+		else if (dx === 0 && dy === 1) {
+
+			for (let x = 0; x < getBoardSize(); x++) {
+				for (let y = getBoardSize() - 1; y >= 0; y--) {
+
+					const xBarrier = (hardcore ? (x >= 3 ? 0 : 3) : 0);
+					const yBarrier = (hardcore ? (y >= 3 ? 0 : 3) : 0);
+
+					if (!boardContents[y][x]) {
+						continue;
+					}
+
+					let blockDelta = getBoardSize() - 1 - yBarrier - y;
+
+					for (let ny = y + 1; ny < getBoardSize() - yBarrier; ny++) {
+						if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
+							blockDelta = ny - y - 1;
+							break;
+						}
+					}
+
+					if (hardcore) {
+						if (y === 2) blockDelta = 1 * !(boardContents[y + 1][x] && boardContents[y + 1][x] !== boardContents[y][x]);
+					}
+
+					if (blockDelta === 0) continue;
+
+					delta[y][x] = blockDelta * dy;
+
+					boardContents[y + blockDelta][x] = (boardContents[y + blockDelta][x] === boardContents[y][x]) ? (() => {promotion[y + blockDelta + rDelta[y + blockDelta][x]][x] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+					boardContents[y][x] = null;
+
+					rDelta[y + blockDelta][x] = -blockDelta;
+				}
+			}
+		}
+
+		else if (dx === -1 && dy === 0) {
 
 			for (let y = 0; y < getBoardSize(); y++) {
 				for (let x = 0; x < getBoardSize(); x++) {
-					var squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
-					let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
-					
-					if (elementAtLocation.className.includes('block')) {
-						boardContents[y][x] = $(elementAtLocation).attr('data-stage');
+
+					const xBarrier = (hardcore ? (x >= 3 ? 3 : 0) : 0);
+					const yBarrier = (hardcore ? (y >= 3 ? 3 : 0) : 0);
+
+					if (!boardContents[y][x]) {
+						continue;
 					}
+
+					let blockDelta = xBarrier - x;
+
+					for (let nx = x - 1; nx >= xBarrier; nx--) {
+						if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
+							blockDelta = nx - x + 1;
+							break;
+						}
+					}
+
+					if (hardcore) {
+						if (x === 3) blockDelta = -1 * !(boardContents[y][x - 1] && boardContents[y][x - 1] !== boardContents[y][x]);
+					}
+
+					if (blockDelta === 0) continue;
+
+					delta[y][x] = blockDelta * dx;
+
+					boardContents[y][x + blockDelta] = (boardContents[y][x + blockDelta] === boardContents[y][x]) ? (() => {promotion[y][x + blockDelta + rDelta[y][x + blockDelta]] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+					boardContents[y][x] = null;
+
+					rDelta[y][x + blockDelta] = -blockDelta;
 				}
 			}
-
-			$('#touch-layer').removeClass('no-touch');
-
-			return boardContents;
 		}
 
-		function slide(dx, dy) {
-
-			if (areAnimationsPlaying()) {
-				if (!queued) {
-					console.log('added to queue');
-					queued = true;
-					gdx = dx;
-					gdy = dy;
-					spawnCompletionScripts.push(() => {queued = false; slide(gdx, gdy)});
-				}
-				return;
-			}
-
-			console.log('animations are not playing');
-
-			const hardcore = gamemode === 'hardcore';
-
-			if (gamemode === 'classic') {
-
-				var delta = [
-					[0, 0, 0, 0],
-					[0, 0, 0, 0],
-					[0, 0, 0, 0],
-					[0, 0, 0, 0]
-				];
-
-				var rDelta = [
-					[0, 0, 0, 0],
-					[0, 0, 0, 0],
-					[0, 0, 0, 0],
-					[0, 0, 0, 0]
-				];
-
-				var promotion = [
-					[false, false, false, false],
-					[false, false, false, false],
-					[false, false, false, false],
-					[false, false, false, false]
-				];
-
-				var collapse = [
-					[false, false, false, false],
-					[false, false, false, false],
-					[false, false, false, false],
-					[false, false, false, false]
-				];
-
-			} else if (hardcore) {
-
-				var delta = [
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0]
-				];
-
-				var rDelta = [
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0]
-				];
-
-				var promotion = [
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false]
-				];
-
-				var collapse = [
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false],
-					[false, false, false, false, false, false]
-				];
-			}
-
-			var boardContents = getBoardData();
-
-			$('#touch-layer').addClass('no-touch');
-
-			if (dx === 0 && dy === -1) {
-
-				for (let x = 0; x < getBoardSize(); x++) {
-					for (let y = 0; y < getBoardSize(); y++) {
-
-						const xBarrier = (hardcore ? (x >= 3 ? 3 : 0) : 0);
-						const yBarrier = (hardcore ? (y >= 3 ? 3 : 0) : 0);
-
-						if (!boardContents[y][x]) {
-							continue;
-						}
-
-						let blockDelta = yBarrier - y;
-
-						for (let ny = y - 1; ny >= yBarrier; ny--) {
-							if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
-								blockDelta = ny - y + 1;
-								break;
-							}
-						}
-
-						if (hardcore) {
-							if (y === 3) blockDelta = -1 * !(boardContents[y - 1][x] && boardContents[y - 1][x] !== boardContents[y][x]);
-						}
-
-						if (blockDelta === 0) continue;
-
-						delta[y][x] = blockDelta * dy;
-
-						boardContents[y + blockDelta][x] = (boardContents[y + blockDelta][x] === boardContents[y][x]) ? (() => {promotion[y + blockDelta + rDelta[y + blockDelta][x]][x] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
-						boardContents[y][x] = null;
-
-						rDelta[y + blockDelta][x] = -blockDelta;
-					}
-				}
-			}
-
-			else if (dx === 0 && dy === 1) {
-
-				for (let x = 0; x < getBoardSize(); x++) {
-					for (let y = getBoardSize() - 1; y >= 0; y--) {
-
-						const xBarrier = (hardcore ? (x >= 3 ? 0 : 3) : 0);
-						const yBarrier = (hardcore ? (y >= 3 ? 0 : 3) : 0);
-
-						if (!boardContents[y][x]) {
-							continue;
-						}
-
-						let blockDelta = getBoardSize() - 1 - yBarrier - y;
-
-						for (let ny = y + 1; ny < getBoardSize() - yBarrier; ny++) {
-							if (boardContents[ny][x] && boardContents[ny][x] !== boardContents[y][x]) {
-								blockDelta = ny - y - 1;
-								break;
-							}
-						}
-
-						if (hardcore) {
-							if (y === 2) blockDelta = 1 * !(boardContents[y + 1][x] && boardContents[y + 1][x] !== boardContents[y][x]);
-						}
-
-						if (blockDelta === 0) continue;
-
-						delta[y][x] = blockDelta * dy;
-
-						boardContents[y + blockDelta][x] = (boardContents[y + blockDelta][x] === boardContents[y][x]) ? (() => {promotion[y + blockDelta + rDelta[y + blockDelta][x]][x] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
-						boardContents[y][x] = null;
-
-						rDelta[y + blockDelta][x] = -blockDelta;
-					}
-				}
-			}
-
-			else if (dx === -1 && dy === 0) {
-
-				for (let y = 0; y < getBoardSize(); y++) {
-					for (let x = 0; x < getBoardSize(); x++) {
-
-						const xBarrier = (hardcore ? (x >= 3 ? 3 : 0) : 0);
-						const yBarrier = (hardcore ? (y >= 3 ? 3 : 0) : 0);
-
-						if (!boardContents[y][x]) {
-							continue;
-						}
-
-						let blockDelta = xBarrier - x;
-
-						for (let nx = x - 1; nx >= xBarrier; nx--) {
-							if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
-								blockDelta = nx - x + 1;
-								break;
-							}
-						}
-
-						if (hardcore) {
-							if (x === 3) blockDelta = -1 * !(boardContents[y][x - 1] && boardContents[y][x - 1] !== boardContents[y][x]);
-						}
-
-						if (blockDelta === 0) continue;
-
-						delta[y][x] = blockDelta * dx;
-
-						boardContents[y][x + blockDelta] = (boardContents[y][x + blockDelta] === boardContents[y][x]) ? (() => {promotion[y][x + blockDelta + rDelta[y][x + blockDelta]] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
-						boardContents[y][x] = null;
-
-						rDelta[y][x + blockDelta] = -blockDelta;
-					}
-				}
-			}
-
-			else if (dx === 1 && dy === 0) {
-
-				for (let y = 0; y < getBoardSize(); y++) {
-					for (let x = getBoardSize() - 1; x >= 0; x--) {
-
-						const xBarrier = (hardcore ? (x >= 3 ? 0 : 3) : 0);
-						const yBarrier = (hardcore ? (y >= 3 ? 0 : 3) : 0);
-
-						if (!boardContents[y][x]) {
-							continue;
-						}
-
-						let blockDelta = getBoardSize() - 1 - xBarrier - x;
-
-						for (let nx = x + 1; nx < getBoardSize() - xBarrier; nx++) {
-							if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
-								blockDelta = nx - x - 1;
-								break;
-							}
-						}
-
-						if (hardcore) {
-							if (x === 2) blockDelta = 1 * !(boardContents[y][x + 1] && boardContents[y][x + 1] !== boardContents[y][x]);
-						}
-
-						if (blockDelta === 0) continue;
-
-						delta[y][x] = blockDelta * dx;
-
-						boardContents[y][x + blockDelta] = (boardContents[y][x + blockDelta] === boardContents[y][x]) ? (() => {promotion[y][x + blockDelta + rDelta[y][x + blockDelta]] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
-						boardContents[y][x] = null;
-
-						rDelta[y][x + blockDelta] = -blockDelta;
-					}
-				}
-			}
-
-		
+		else if (dx === 1 && dy === 0) {
 
 			for (let y = 0; y < getBoardSize(); y++) {
-				for (let x = 0; x < getBoardSize(); x++) {
-					let squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
-					let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
-					
-					let elementAtNewLocation = document.elementFromPoint(vu(getTileSize() / 2) + vu(toVuPosition(x + delta[y][x] * dx)), vh(getTileSize() / 2) + vu(toVuPosition(x + delta[y][x] * dy)));
+				for (let x = getBoardSize() - 1; x >= 0; x--) {
 
-					if (elementAtLocation.className.includes('block')) {
-						$(elementAtLocation).css('top', 'calc(var(--vu) * ' + toVuPosition(y + delta[y][x] * dy) + ')');
-						$(elementAtLocation).css('left', 'calc(var(--vu) * ' + toVuPosition(x + delta[y][x] * dx) + ')');
+					const xBarrier = (hardcore ? (x >= 3 ? 0 : 3) : 0);
+					const yBarrier = (hardcore ? (y >= 3 ? 0 : 3) : 0);
 
-						if (promotion[y][x]) {
-							$(elementAtLocation).addClass('pulse no-anim');
+					if (!boardContents[y][x]) {
+						continue;
+					}
 
-							$(elementAtLocation).one('animationend', () => {
-								$(elementAtLocation).removeClass('pulse');
-							});
+					let blockDelta = getBoardSize() - 1 - xBarrier - x;
 
-							let stage = Number($(elementAtLocation).attr('data-stage'));
-							animCompletionScripts.push(() => {
-								$(elementAtLocation).attr('data-stage', (stage + 1).toString());
-							});
+					for (let nx = x + 1; nx < getBoardSize() - xBarrier; nx++) {
+						if (boardContents[y][nx] && boardContents[y][nx] !== boardContents[y][x]) {
+							blockDelta = nx - x - 1;
+							break;
 						}
+					}
 
-						if (collapse[y][x]) {
-							animCompletionScripts.push(() => {
-								$(elementAtLocation).remove();
-							});
-						}
+					if (hardcore) {
+						if (x === 2) blockDelta = 1 * !(boardContents[y][x + 1] && boardContents[y][x + 1] !== boardContents[y][x]);
+					}
+
+					if (blockDelta === 0) continue;
+
+					delta[y][x] = blockDelta * dx;
+
+					boardContents[y][x + blockDelta] = (boardContents[y][x + blockDelta] === boardContents[y][x]) ? (() => {promotion[y][x + blockDelta + rDelta[y][x + blockDelta]] = true; collapse[y][x] = true; return '0';})() : boardContents[y][x];
+					boardContents[y][x] = null;
+
+					rDelta[y][x + blockDelta] = -blockDelta;
+				}
+			}
+		}
+
+	
+
+		for (let y = 0; y < getBoardSize(); y++) {
+			for (let x = 0; x < getBoardSize(); x++) {
+				let squarePos = $('.square').get(gamemodeTileIndices.indexOf(x + y * getBoardSize())).getBoundingClientRect();
+				let elementAtLocation = document.elementFromPoint(squarePos.left + vu(getTileSize() / 2), squarePos.top + vu(getTileSize() / 2));
+				
+				let elementAtNewLocation = document.elementFromPoint(vu(getTileSize() / 2) + vu(toVuPosition(x + delta[y][x] * dx)), vh(getTileSize() / 2) + vu(toVuPosition(x + delta[y][x] * dy)));
+
+				if (elementAtLocation.className.includes('block')) {
+					$(elementAtLocation).css('top', 'calc(var(--vu) * ' + toVuPosition(y + delta[y][x] * dy) + ')');
+					$(elementAtLocation).css('left', 'calc(var(--vu) * ' + toVuPosition(x + delta[y][x] * dx) + ')');
+
+					if (promotion[y][x]) {
+						$(elementAtLocation).addClass('pulse no-anim');
+
+						$(elementAtLocation).one('animationend', () => {
+							$(elementAtLocation).removeClass('pulse');
+						});
+
+						let stage = Number($(elementAtLocation).attr('data-stage'));
+						animCompletionScripts.push(() => {
+							$(elementAtLocation).attr('data-stage', (stage + 1).toString());
+						});
+					}
+
+					if (collapse[y][x]) {
+						animCompletionScripts.push(() => {
+							$(elementAtLocation).remove();
+						});
 					}
 				}
 			}
-
-			const t = JSON.stringify(delta);
-
-			if (t.includes('1') || t.includes('2') || t.includes('3')) {
-				animCompletionScripts.push(spawnSquare);
-			}
-
-			$('#touch-layer').removeClass('no-touch');
 		}
 
-		function keyMove(e) {
-			if (e.key === 'ArrowUp') {
-				slide(0, -1);
-			}
-			else if (e.key === 'ArrowDown') {
-				slide(0, 1);
-			}
-			else if (e.key === 'ArrowLeft') {
-				slide(-1, 0);
-			}
-			else if (e.key === 'ArrowRight') {
-				slide(1, 0);
-			}
+		const t = JSON.stringify(delta);
+
+		if (t.includes('1') || t.includes('2') || t.includes('3')) {
+			animCompletionScripts.push(spawnSquare);
 		}
 
-		var mousePressed = false;
-		var touchPressed = false;
+		$('#touch-layer').removeClass('no-touch');
+	}
 
-		$(window).on('keydown', keyMove);
+	function keyMove(e) {
+		if (e.key === 'ArrowUp') {
+			slide(0, -1);
+		}
+		else if (e.key === 'ArrowDown') {
+			slide(0, 1);
+		}
+		else if (e.key === 'ArrowLeft') {
+			slide(-1, 0);
+		}
+		else if (e.key === 'ArrowRight') {
+			slide(1, 0);
+		}
+	}
 
-		$('#touch-layer').on('mousedown', (e) => {
-			mousePressed = [e.clientX, e.clientY];
-		})
-		.on('touchstart', (e) => {
-			e.preventDefault();
+	var mousePressed = false;
+	var touchPressed = false;
 
-			touchPressed = [e.touches[0].clientX, e.touches[0].clientY];
-		})
-		.on('mousemove', (e) => {
-			if (!mousePressed) return;
+	function swipeZoneDetect(x, y, t) {
+		const l = $('#touch-layer')[0].offsetWidth / 5;
+		const p = Math.sqrt(x ** 2 + y ** 2) / l / Math.max(Date.now() - t, 1000 / 60) * 100 + 1;
+		const e = 2 ** p;
+		//console.log('Exp: ' + e);
+		return (Math.abs(x) ** e + Math.abs(y) ** e) ** (1 / e) > (l / 2 ** ((e - 2) / (2 * e)));
+	}
 
-			const pos = [e.clientX, e.clientY];
-			const d = pos.map((el, i) => (el - mousePressed[i]));
+	$(window).on('keydown', keyMove);
 
-			if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
+	$('#touch-layer').on('mousedown', (e) => {
+		mousePressed = [e.clientX, e.clientY, Date.now()];
+	})
+	.on('touchstart', (e) => {
+		e.preventDefault();
 
+		touchPressed = [e.touches[0].clientX, e.touches[0].clientY, Date.now()];
+	})
+	.on('mousemove', throttle((e) => {
+		if (!mousePressed) return;
 
+		const pos = [e.clientX, e.clientY];
+		const d = pos.map((el, i) => (el - mousePressed[i]));
 
-			if (d[0] > 0 && d[0] > Math.abs(d[1])) slide(1, 0);
+		//if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
 
-			else if (d[0] < 0 && -d[0] > Math.abs(d[1])) slide(-1, 0);
-
-			else if (d[1] > 0 && d[1] > Math.abs(d[0])) slide(0, 1);
-
-			else if (d[1] < 0 && -d[1] > Math.abs(d[0])) slide(0, -1);
-
-			mousePressed = false;
-		})
-		.on('touchmove', (e) => {
-			e.preventDefault();
-
-			if (!touchPressed) return;
-
-			const pos = [e.touches[0].clientX, e.touches[0].clientY];
-			const d = pos.map((el, i) => (el - touchPressed[i]));
-
-			if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
+		if (!swipeZoneDetect(d[0], d[1], mousePressed[2])) return;
 
 
 
-			if (d[0] > 0 && d[0] > Math.abs(d[1])) slide(1, 0);
+		if (d[0] > 0 && d[0] > Math.abs(d[1])) slide(1, 0);
 
-			else if (d[0] < 0 && -d[0] > Math.abs(d[1])) slide(-1, 0);
+		else if (d[0] < 0 && -d[0] > Math.abs(d[1])) slide(-1, 0);
 
-			else if (d[1] > 0 && d[1] > Math.abs(d[0])) slide(0, 1);
+		else if (d[1] > 0 && d[1] > Math.abs(d[0])) slide(0, 1);
 
-			else if (d[1] < 0 && -d[1] > Math.abs(d[0])) slide(0, -1);
+		else if (d[1] < 0 && -d[1] > Math.abs(d[0])) slide(0, -1);
 
-			touchPressed = false;
-		})
-		.on('mouseup', (e) => {
-			mousePressed = false;
-		})
-		.on('touchend', (e) => {
-			touchPressed = false;
-		});
+		mousePressed = false;
+	}, 1000 / 30))
+	.on('touchmove', (e) => {
+		e.preventDefault();
 
-		$('section').on('transitionstart', '.block', (e) => {
-			console.log('transition started');
-			$(e.target).attr('data-animating', 'yes');
-		}).on('transitionend', '.block', (e) => {
+		if (!touchPressed) return;
 
-			console.log('transition ended');
+		const pos = [e.touches[0].clientX, e.touches[0].clientY];
+		const d = pos.map((el, i) => (el - touchPressed[i]));
 
-			$(e.target).attr('data-animating', 'no');
+		if (d[0]**2 + d[1]**2 < ($('#touch-layer')[0].offsetWidth / 5)**2) return;
 
-			if (!areAnimationsPlaying()) {
-				console.log('Not animating');
-				for (let func of animCompletionScripts) {
-					func();
-				}
 
-				animCompletionScripts = [];
+
+		if (d[0] > 0 && d[0] > Math.abs(d[1])) slide(1, 0);
+
+		else if (d[0] < 0 && -d[0] > Math.abs(d[1])) slide(-1, 0);
+
+		else if (d[1] > 0 && d[1] > Math.abs(d[0])) slide(0, 1);
+
+		else if (d[1] < 0 && -d[1] > Math.abs(d[0])) slide(0, -1);
+
+		touchPressed = false;
+	})
+	.on('mouseup', (e) => {
+		mousePressed = false;
+	})
+	.on('touchend', (e) => {
+		touchPressed = false;
+	});
+
+	$('section').on('transitionstart', '.block', (e) => {
+		//console.log('transition started');
+		$(e.target).attr('data-animating', 'yes');
+	}).on('transitionend', '.block', (e) => {
+
+		//console.log('transition ended');
+
+		$(e.target).attr('data-animating', 'no');
+
+		if (!areAnimationsPlaying()) {
+			//console.log('Not animating');
+			for (let func of animCompletionScripts) {
+				func();
 			}
-		});
 
-		var spriteSheet = new Image();
-		spriteSheet.src = 'characters.png';
+			animCompletionScripts = [];
+		}
+	});
 
-		var spriteSheetLowRes = new Image();
-		spriteSheetLowRes.src = 'characters-lowres.png';
+	var spriteSheet = new Image();
+	spriteSheet.src = 'characters.png';
+
+	var spriteSheetLowRes = new Image();
+	spriteSheetLowRes.src = 'characters-lowres.png';
+
+
+
+
+
+	window.addEventListener('resize', throttle(setVh, 1000 / 30));
+
+	setVh();
 
 	</script>
 
