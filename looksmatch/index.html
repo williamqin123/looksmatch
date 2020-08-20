@@ -3,6 +3,8 @@
 <head>
 	<title>LOOKSMATCH: a PSL-themed puzzle game based on 2048</title>
 
+	<meta charset="utf-8">
+
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" href="clear-sans-font-face/stylesheet.css">
@@ -28,13 +30,18 @@
 
 	html, body {
 		margin: 0;
-		background: #121212;
+		background-color: #121212;
 		color: white;
 		font-family: 'Clear Sans', sans-serif;
 		font-size: calc(var(--vu) * 3);
 		width: 100vw;
+		height: calc(var(--vh) * 100);
 		line-height: 1.5;
 		overflow: hidden;
+
+		background-image: url('BGhoriz.png');
+		background-position: center center;
+		background-size: cover;
 	}
 
 	main {
@@ -59,9 +66,29 @@
 	}
 
 	h1 {
+		font-weight: 500;
 		font-size: 1.5rem;
 		margin: 0;
 		color: #F5F5F5;
+		font-style: italic;
+	}
+
+	h1, h1 * {
+		vertical-align: baseline;
+	}
+
+	h1 span {
+		transform: scale(1.25, 1.5);
+		position: relative;
+		display: inline-block;
+		font-weight: 300 !important;
+		left: -0.03em;
+		bottom: -0.015em;
+	}
+
+	h1 em {
+		font-size: 0.76em;
+		font-weight: 700;
 	}
 
 	footer {
@@ -158,7 +185,7 @@
 	.block {
 		position: absolute;
 		transition: top 0.25s ease-in-out, left 0.25s ease-in-out;
-		background-size: 1100% 100%, 1100% 100%;
+		background-size: 1500% 100%, 1500% 100%;
 		animation: spawn 0.25s ease-in;
 		background-image: url('characters.png'), url('characters-lowres.png');
 	}
@@ -203,9 +230,28 @@
 		background-position: -900% center, -900% center;
 	}
 	.block[data-stage='11'] {
-		box-shadow: inset 0 0 0 1px #ff3d00ff, 0 0 calc(var(--vu) * 1.5) 0 #ff3d00;
+		box-shadow: inset 0 0 0 1px #ff3d00, 0 0 calc(var(--vu) * 1.5) 0 #ff3d00;
 		background-position: -1000% center, -1000% center;
 	}
+
+	.block[data-stage='12'] {
+		box-shadow: inset 0 0 0 1px #ff8000, 0 0 calc(var(--vu) * 1.75) 0 #ff8000;
+		background-position: -1100% center, -1100% center;
+	}
+	.block[data-stage='13'] {
+		box-shadow: inset 0 0 0 1px white, 0 0 calc(var(--vu) * 2) 0 white;
+		background-position: -1200% center, -1200% center;
+	}
+	.block[data-stage='14'] {
+		box-shadow: inset 0 0 0 1px yellow, 0 0 calc(var(--vu) * 0.5) 0 white, 0 0 calc(var(--vu) * 2) 0 yellow;
+		background-position: -1300% center, -1300% center;
+	}
+	.block[data-stage='15'] {
+		box-shadow: inset 0 0 1px 1px magenta, 0 0 calc(var(--vu) * 0.5) white, 0 0 calc(var(--vu) * 1.5) magenta, calc(var(--vu) * 0.5) calc(var(--vu) * 0.5) calc(var(--vu) * 1.5) 0 blue, calc(var(--vu) * -0.5) calc(var(--vu) * -0.5) calc(var(--vu) * 1.5) 0 red;
+		background-position: -1400% center, -1400% center;
+	}
+
+
 
 	.no-touch {
 		pointer-events: none;
@@ -243,6 +289,18 @@
 	}
 	.block[data-stage='12'], .block.pulse[data-stage='11'] {
 		z-index: 12;
+	}
+	.block[data-stage='13'], .block.pulse[data-stage='12'] {
+		z-index: 13;
+	}
+	.block[data-stage='14'], .block.pulse[data-stage='13'] {
+		z-index: 14;
+	}
+	.block[data-stage='15'], .block.pulse[data-stage='14'] {
+		z-index: 15;
+	}
+	.block[data-stage='16'], .block.pulse[data-stage='15'] {
+		z-index: 16;
 	}
 
 	dialog {
@@ -562,7 +620,9 @@
 	<main>
 
 		<header>
-			<h1>looksmatch</h1>
+			<h1>
+				<em>L</em>&hairsp;<span>∞</span>&hairsp;<em>K</em>sma<em>T</em>c<em>H</em>
+			</h1>
 			<button onclick='if(!gameIsOver()){$("#restart-confirmation").addClass("fadein fast");$("#new-game").addClass("hidden");}else{resetGame();}' id='new-game' class='hidden solid'>New game</button>
 		</header>
 
@@ -643,7 +703,7 @@
 
 
 		<footer>
-			<span>v1.4</span>
+			<span>v2.0 dev</span>
 			<span>By <em>thecel</em></span>
 		</footer>
 
@@ -843,6 +903,15 @@
 			return 1.5 + u * (1.5 + getTileSize()) + 2 * (u >= 3);
 		}
 		return 2 + u * (2 + getTileSize());
+	}
+
+	function testMode() {
+		$('.block').remove();
+		for (let stage = 1; stage <= 15; stage++) {
+			$('section').append(`
+				<div class='block' style='top: calc(var(--vu) * ${toVuPosition(Math.floor((stage - 1) / 4))}); left: calc(var(--vu) * ${toVuPosition((stage - 1) % 4)});' data-stage='${stage}'></div>
+			`);
+		}
 	}
 
 	function spawnSquare() {
@@ -1314,8 +1383,6 @@
 
 	var spriteSheetLowRes = new Image();
 	spriteSheetLowRes.src = 'characters-lowres.png';
-
-
 
 
 
